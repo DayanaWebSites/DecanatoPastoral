@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Cita from '../components/ui/Cita.astro';
+import Boton from '../components/ui/Boton.astro';
+import cartel from '../assets/decanato/cartel-carlo-acutis.webp';
+import textos from '../data/textos.json';
+import decanato from '../data/decanato.json';
+---
+<Base
+  titulo="Qué es la Pastoral Social"
+  descripcion="La Pastoral Social es la expresión del amor de la Iglesia hacia quienes viven pobreza, enfermedad, soledad o exclusión. Conoce qué hacemos en el Decanato Dulce Nombre de Jesús."
+>
+  <section class="bg-verde-900 pt-16 text-crema">
+    <div class="contenedor">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-oro-400">{decanato.nombre}</p>
+      <h1 class="mt-3 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{textos.queEs.titulo}</h1>
+      <p class="mt-5 max-w-2xl font-serif text-xl italic text-oro-200">{textos.hero.entrada}</p>
+    </div>
+    <div class="filete mt-12" aria-hidden="true"></div>
+  </section>
+
+  <section class="contenedor-angosto py-16">
+    {textos.queEs.parrafos.map((p) => (
+      <p class="mt-5 text-[17px] leading-[1.8] text-tinta/85 first:mt-0">{p}</p>
+    ))}
+  </section>
+
+  <!-- Dilexi te -->
+  <section class="bg-verde-900 py-20 text-crema" aria-labelledby="h-dilexi">
+    <div class="contenedor-angosto">
+      <h2 id="h-dilexi" class="font-serif text-3xl font-semibold">{textos.dilexiTe.titulo}</h2>
+      <figure class="mt-8 border-l-4 border-oro-500 pl-6">
+        <blockquote class="font-serif text-2xl italic leading-relaxed text-oro-200">
+          {textos.dilexiTe.citaPrincipal}
+        </blockquote>
+      </figure>
+      <ul class="mt-10 space-y-4">
+        {textos.dilexiTe.puntos.map((p) => (
+          <li class="flex gap-4 text-[16px] leading-relaxed text-crema/85">
+            <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-oro-500" aria-hidden="true"></span>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Qué hacemos -->
+  <section class="contenedor py-20" aria-labelledby="h-hacemos">
+    <div class="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+      <div>
+        <h2 id="h-hacemos" class="font-serif text-3xl font-semibold text-verde-900">{textos.queHacemos.titulo}</h2>
+        <p class="mt-4 text-[17px] leading-relaxed text-grafito">{textos.queHacemos.entrada}</p>
+        <ul class="mt-8 space-y-5">
+          {textos.queHacemos.acciones.map((a) => (
+            <li class="emerger border-l-2 border-oro-300 pl-5">
+              <h3 class="font-serif text-xl font-semibold text-verde-800">{a.titulo}</h3>
+              <p class="mt-1 text-[15px] leading-relaxed text-tinta/80">{a.texto}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-10 text-[17px] leading-[1.8] text-tinta/85">{textos.queHacemos.cierre}</p>
+      </div>
+
+      <Image
+        src={cartel}
+        alt="Cartel de la Pastoral Social de Decanato con la frase de Carlo Acutis: la tristeza es mirar hacia uno mismo; la felicidad es mirar a Dios"
+        width={640}
+        height={950}
+        loading="lazy"
+        class="mx-auto w-full max-w-sm rounded-xl2 shadow-lg ring-1 ring-arena"
+      />
+    </div>
+  </section>
+
+  <!-- Citas -->
+  <section class="bg-arena/60 py-20" aria-labelledby="h-citas">
+    <div class="contenedor">
+      <h2 id="h-citas" class="text-center font-serif text-3xl font-semibold text-verde-900">{textos.citas.titulo}</h2>
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {textos.citas.lista.map((c) => <Cita texto={c.texto} fuente={c.fuente} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Invitación -->
+  <section class="contenedor-angosto py-20 text-center">
+    <h2 class="font-serif text-3xl font-semibold text-verde-900">{textos.invitacion.titulo}</h2>
+    {textos.invitacion.parrafos.map((p) => (
+      <p class="mt-4 text-[17px] leading-relaxed text-tinta/85">{p}</p>
+    ))}
+    <figure class="mt-10">
+      <blockquote class="font-serif text-3xl italic text-oro-700">«{textos.invitacion.lema.texto}»</blockquote>
+      <figcaption class="mt-3 text-sm font-semibold text-grafito">{textos.invitacion.lema.fuente}</figcaption>
+    </figure>
+    <p class="mt-10 text-[17px] leading-[1.8] text-tinta/85">{textos.invitacion.cierre}</p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <Boton href="/ayudar">Quiero ayudar</Boton>
+      <Boton href="/comedores" variante="secundario">Ver los comedores</Boton>
+    </div>
+  </section>
+</Base>

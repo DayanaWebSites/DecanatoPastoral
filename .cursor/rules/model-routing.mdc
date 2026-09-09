@@ -1,0 +1,25 @@
+---
+description: Routing de modelo. Opus dominio, Sonnet UI, Composer 2 mecánico.
+alwaysApply: true
+---
+
+# Model routing — Decanato Pastoral Social
+
+El modelo se elige por **tipo de trabajo**, no por costumbre.
+
+| Trabajo | Modelo | Ejemplos en este repo |
+|---------|--------|------------------------|
+| ADR, cutover de dominio, privacidad, fotos de personas atendidas | **Opus** | `aviso-de-privacidad.astro`, `difuminar-rostros.py`, `public.adr` |
+| UI, QA visual, contraste, copy institucional | **Sonnet** | páginas `.astro`, EurekaDesign, a11y |
+| CRUD de contenido JSON, CI, docs, mecánico | **Composer 2** | `src/content/*.json`, verify, Dockerfile |
+
+God nodes (si se editan, **Opus** + impacto GitNexus antes):
+
+- `src/data/textos.json` — textos aprobados por el decanato
+- `src/styles/global.css` bloque `@theme` — paleta del logo
+- `src/assets/comedores/*` — fotos ya difuminadas
+- `src/pages/aviso-de-privacidad.astro` — texto legal
+- `.gitignore` línea `_source/`
+
+**Escalar.** Si el frontmatter de la task dice `complexity: critical` o el cambio toca
+un god node, emitir `HALT_NEEDS_HIGHER_MODEL`. No degradar a mitad de task.

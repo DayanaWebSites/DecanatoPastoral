@@ -1,0 +1,12 @@
+{
+  "nombre": "El Tepeyac",
+  "orden": 2,
+  "estado": "publicada",
+  "servicios": [
+    "Comedor asistencial"
+  ],
+  "contacto": {},
+  "imagen": "el-tepeyac.webp",
+  "comedor": "el-tepeyac",
+  "nota": "En esta parroquia opera el Comedor El Tepeyac."
+}

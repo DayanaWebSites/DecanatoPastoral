@@ -1,0 +1,12 @@
+{
+  "nombre": "San Bernardo",
+  "orden": 8,
+  "estado": "publicada",
+  "servicios": [
+    "Comedor asistencial"
+  ],
+  "contacto": {},
+  "imagen": "san-bernardo.webp",
+  "comedor": "san-bernardo",
+  "nota": "En esta parroquia opera el Desayunador de San Bernardo."
+}

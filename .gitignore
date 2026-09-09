@@ -1,0 +1,24 @@
+# build
+dist/
+.astro/
+node_modules/
+
+# entorno
+.env
+.env.*
+!.env.example
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# material fuente sin procesar (fotos originales con rostros sin difuminar)
+_source/
+
+# GitNexus (índice local, no se comitea)
+.gitnexus/
+
+# Copias generadas de referencias UI (el logo original vive en src/assets/)
+SIGMA_OMEGA/PROJECT/ui-references/*.webp

@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/decanato/logo-claro.webp';
+import decanato from '../../data/decanato.json';
+import { getCollection } from 'astro:content';
+
+const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
+const anio = new Date().getFullYear();
+---
+
+<footer class="mt-24 bg-verde-900 text-crema">
+  <div class="filete" aria-hidden="true"></div>
+  <div class="contenedor grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="sm:col-span-2 lg:col-span-1">
+      <Image src={logo} alt="Escudo del Decanato Dulce Nombre de Jesús" width={64} height={64} densities={[2]} loading="lazy" class="h-16 w-16 rounded-full ring-1 ring-oro-500/40" />
+      <p class="mt-4 font-serif text-lg">{decanato.nombre}</p>
+      <p class="mt-1 text-sm text-crema/85">{decanato.arquidiocesis}</p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-oro-300">Comedores</h2>
+      <ul class="mt-4 space-y-2 text-sm">
+        {comedores.map((c) => (
+          <li><a class="text-crema/90 underline-offset-4 hover:text-oro-300 hover:underline" href={`/comedores/${c.id}`}>{c.data.nombre}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-oro-300">El decanato</h2>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a class="text-crema/90 underline-offset-4 hover:text-oro-300 hover:underline" href="/pastoral-social">Qué es la Pastoral Social</a></li>
+        <li><a class="text-crema/90 underline-offset-4 hover:text-oro-300 hover:underline" href="/parroquias">Parroquias del decanato</a></li>
+        <li><a class="text-crema/90 underline-offset-4 hover:text-oro-300 hover:underline" href="/ayudar">Quiero ayudar</a></li>
+        <li><a class="text-crema/90 underline-offset-4 hover:text-oro-300 hover:underline" href="/aviso-de-privacidad">Aviso de privacidad</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-oro-300">Responsables</h2>
+      <dl class="mt-4 space-y-3 text-sm">
+        <div>
+          <dt class="text-crema/80">Decano</dt>
+          <dd class="text-crema">{decanato.decano}</dd>
+        </div>
+        <div>
+          <dt class="text-crema/80">Pastoral Social · parte asistencial</dt>
+          <dd class="text-crema/90">{decanato.encargadoPastoralSocial}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="border-t border-verde-800">
+    <div class="contenedor flex flex-col gap-2 py-6 text-xs text-crema/80 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {anio} {decanato.nombre} · {decanato.arquidiocesis}</p>
+      <p>Las fotografías publicadas resguardan la identidad de las personas atendidas.</p>
+    </div>
+  </div>
+</footer>

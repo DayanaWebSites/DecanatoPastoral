@@ -1,0 +1,149 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Boton from '../../components/ui/Boton.astro';
+import Aviso from '../../components/ui/Aviso.astro';
+import decanato from '../../data/decanato.json';
+
+export async function getStaticPaths() {
+  const parroquias = await getCollection('parroquias');
+  return parroquias.map((p) => ({ params: { slug: p.id }, props: { parroquia: p } }));
+}
+
+interface Props { parroquia: CollectionEntry<'parroquias'> }
+const { parroquia } = Astro.props;
+const d = parroquia.data;
+
+const imagenes = import.meta.glob<{ default: ImageMetadata }>('../../assets/logos/*.webp', { eager: true });
+const img = d.imagen ? imagenes[`../../assets/logos/${d.imagen}`]?.default : undefined;
+
+const comedores = await getCollection('comedores');
+const comedor = d.comedor ? comedores.find((c) => c.id === d.comedor) : undefined;
+const enConstruccion = d.estado === 'en_construccion';
+const urlPagina = new URL(`/parroquias/${parroquia.id}`, Astro.site ?? decanato.sitio).toString();
+
+const lugar: Record<string, unknown> = {
+  '@type': 'PlaceOfWorship',
+  name: `Parroquia ${d.nombre}`,
+  url: urlPagina,
+  parentOrganization: { '@type': 'Organization', name: decanato.nombre },
+};
+if (d.direccion) {
+  lugar.address = {
+    '@type': 'PostalAddress',
+    streetAddress: d.direccion,
+    addressLocality: 'Guadalajara',
+    addressRegion: 'Jalisco',
+    addressCountry: 'MX',
+  };
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    lugar,
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site ?? decanato.sitio).toString() },
+        { '@type': 'ListItem', position: 2, name: 'Parroquias', item: new URL('/parroquias', Astro.site ?? decanato.sitio).toString() },
+        { '@type': 'ListItem', position: 3, name: d.nombre, item: urlPagina },
+      ],
+    },
+  ],
+};
+---
+<Base
+  titulo={`Parroquia ${d.nombre}`}
+  descripcion={`Parroquia ${d.nombre}, del ${decanato.nombre} en Guadalajara. Servicios de Pastoral Social y contacto.`}
+  jsonLd={jsonLd}
+>
+  <section class="bg-verde-900 pt-14 text-crema">
+    <div class="contenedor">
+      <nav aria-label="Migas de pan" class="text-sm text-crema/80">
+        <a class="underline-offset-4 hover:text-oro-300 hover:underline" href="/parroquias">Parroquias</a>
+        <span class="mx-2" aria-hidden="true">/</span>
+        <span class="text-crema">{d.nombre}</span>
+      </nav>
+      <div class="mt-8 flex flex-wrap items-center gap-6">
+        {img && (
+          <Image src={img} alt={`Parroquia ${d.nombre}`} width={128} height={128} loading="eager"
+            class="h-24 w-24 rounded-xl2 object-cover ring-1 ring-oro-500/40 sm:h-28 sm:w-28" />
+        )}
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-oro-400">Parroquia</p>
+          <h1 class="mt-2 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{d.nombre}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="filete mt-12" aria-hidden="true"></div>
+  </section>
+
+  <div class="contenedor-angosto py-16">
+    {d.nota && <p class="text-[17px] leading-relaxed text-tinta/85">{d.nota}</p>}
+
+    {comedor && (
+      <a href={`/comedores/${comedor.id}`} class="emerger mt-8 flex items-center gap-5 rounded-xl2 border border-oro-300 bg-oro-100/60 p-6 transition-shadow hover:shadow-md">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-oro-500 text-verde-900">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 11h16M6 11a6 6 0 0 1 12 0M4 15h16M7 19h10" stroke-linecap="round" /></svg>
+        </span>
+        <span>
+          <span class="block text-xs font-bold uppercase tracking-[0.14em] text-oro-700">Comedor asistencial</span>
+          <span class="mt-1 block font-serif text-xl font-semibold text-verde-900">{comedor.data.nombre}</span>
+          <span class="mt-1 block text-sm text-grafito">
+            {comedor.data.horario.dias} · {comedor.data.horario.inicio} a {comedor.data.horario.fin}
+          </span>
+        </span>
+      </a>
+    )}
+
+    {d.servicios.length > 0 && (
+      <section class="mt-12" aria-labelledby="h-servicios">
+        <h2 id="h-servicios" class="font-serif text-2xl font-semibold text-verde-900">Qué ofrece</h2>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {d.servicios.map((s) => (
+            <li class="rounded-full border border-verde-200 bg-verde-50 px-4 py-1.5 text-sm font-medium text-verde-800">{s}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {(d.direccion || d.contacto.telefono || d.contacto.whatsapp || d.contacto.correo) && (
+      <section class="mt-12" aria-labelledby="h-contacto">
+        <h2 id="h-contacto" class="font-serif text-2xl font-semibold text-verde-900">Contacto</h2>
+        <dl class="mt-5 space-y-3 text-[15px]">
+          {d.direccion && (<div class="flex gap-3"><dt class="w-28 shrink-0 text-grafito">Dirección</dt><dd class="text-tinta/85">{d.direccion}</dd></div>)}
+          {d.contacto.telefono && (<div class="flex gap-3"><dt class="w-28 shrink-0 text-grafito">Teléfono</dt><dd><a class="text-verde-700 underline underline-offset-4" href={`tel:${d.contacto.telefono.replace(/\s/g, '')}`}>{d.contacto.telefono}</a></dd></div>)}
+          {d.contacto.whatsapp && (<div class="flex gap-3"><dt class="w-28 shrink-0 text-grafito">WhatsApp</dt><dd><a class="text-verde-700 underline underline-offset-4" href={`https://wa.me/${d.contacto.whatsapp.replace(/\D/g, '')}`}>{d.contacto.whatsapp}</a></dd></div>)}
+          {d.contacto.correo && (<div class="flex gap-3"><dt class="w-28 shrink-0 text-grafito">Correo</dt><dd><a class="text-verde-700 underline underline-offset-4" href={`mailto:${d.contacto.correo}`}>{d.contacto.correo}</a></dd></div>)}
+        </dl>
+      </section>
+    )}
+
+    {d.horariosMisa.length > 0 && (
+      <section class="mt-12" aria-labelledby="h-misas">
+        <h2 id="h-misas" class="font-serif text-2xl font-semibold text-verde-900">Horarios de misa</h2>
+        <ul class="mt-5 space-y-2 text-[15px] text-tinta/85">
+          {d.horariosMisa.map((h) => <li>{h}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {enConstruccion && (
+      <div class="mt-10">
+        <Aviso titulo="Información en construcción">
+          Todavía estamos reuniendo la información de esta parroquia: los servicios que ofrece su
+          Pastoral Social y sus datos de contacto. En cuanto la tengamos, aparecerá aquí.
+          Si perteneces a esta parroquia y quieres aportarla,
+          <a class="font-semibold text-verde-700 underline underline-offset-4 hover:text-verde-600" href="/ayudar">escríbenos</a>.
+        </Aviso>
+      </div>
+    )}
+
+    <div class="mt-14 flex flex-wrap gap-3">
+      <Boton href="/parroquias" variante="secundario">Ver todas las parroquias</Boton>
+      <Boton href="/comedores" variante="primario">Conoce los comedores</Boton>
+    </div>
+  </div>
+</Base>

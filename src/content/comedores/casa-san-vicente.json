@@ -1,0 +1,24 @@
+{
+  "nombre": "Desayunador Casa San Vicente",
+  "parroquia": "Capilla del Dulce Nombre de Jesús",
+  "orden": 1,
+  "resumen": "Desayuno caliente cada mañana de lunes a viernes, y entrega a domicilio para personas enfermas de los alrededores.",
+  "direccion": "Calle Jesús 778",
+  "ciudad": "Guadalajara, Jalisco",
+  "horario": { "dias": "Lunes a viernes", "inicio": "8:30", "fin": "10:30" },
+  "cifras": [
+    { "valor": "60", "etiqueta": "desayunos diarios", "detalle": "servidos a personas en situación de calle" },
+    { "valor": "40", "etiqueta": "desayunos a domicilio", "detalle": "enviados cada día a personas enfermas de los alrededores" }
+  ],
+  "comoAyudar": [
+    "Sumarte como voluntario para preparar y servir el desayuno",
+    "Apoyar como bienhechor con alimento o insumos",
+    "Canalizar a una persona que necesite desayunar"
+  ],
+  "fotos": [
+    { "archivo": "casa-san-vicente-01-patio.webp", "alt": "Patio del desayunador Casa San Vicente con lonas y mesas dispuestas para el servicio" },
+    { "archivo": "casa-san-vicente-02-comedor-aire-libre.webp", "alt": "Comedor al aire libre durante el horario de desayuno" },
+    { "archivo": "casa-san-vicente-03-servicio.webp", "alt": "Voluntarios sirviendo el desayuno bajo las lonas del patio" },
+    { "archivo": "casa-san-vicente-04-mesas.webp", "alt": "Mesas del desayunador con personas tomando su alimento" }
+  ]
+}

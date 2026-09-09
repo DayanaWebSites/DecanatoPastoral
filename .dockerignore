@@ -1,0 +1,11 @@
+node_modules
+dist
+.astro
+.git
+.github
+_source
+*.log
+.env
+.env.*
+!.env.example
+SIGMA_OMEGA/PROJECT/plans

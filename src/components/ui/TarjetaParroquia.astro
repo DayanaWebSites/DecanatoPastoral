@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { parroquia: CollectionEntry<'parroquias'> }
+const { parroquia } = Astro.props;
+const d = parroquia.data;
+
+const imagenes = import.meta.glob<{ default: ImageMetadata }>('../../assets/logos/*.webp', { eager: true });
+const img = d.imagen ? imagenes[`../../assets/logos/${d.imagen}`]?.default : undefined;
+const enConstruccion = d.estado === 'en_construccion';
+---
+<a
+  href={`/parroquias/${parroquia.id}`}
+  class="group emerger flex flex-col overflow-hidden rounded-xl2 border border-arena bg-white shadow-sm transition-shadow hover:shadow-lg"
+>
+  <div class="relative aspect-[4/3] overflow-hidden bg-verde-50">
+    {img ? (
+      <Image
+        src={img}
+        alt={`Parroquia ${d.nombre}`}
+        width={480}
+        height={360}
+        loading="lazy"
+        class:list={[
+          'h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]',
+          enConstruccion && 'opacity-90 saturate-[0.85]',
+        ]}
+      />
+    ) : (
+      <div class="flex h-full w-full items-center justify-center bg-verde-50">
+        <svg class="h-14 w-14 text-verde-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M12 2v6M9 5h6M5 22V11l7-5 7 5v11" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 22v-5h4v5" />
+        </svg>
+      </div>
+    )}
+    {d.comedor && (
+      <span class="absolute left-3 top-3 rounded-full bg-oro-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-verde-900 shadow">
+        Comedor
+      </span>
+    )}
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <h3 class="font-serif text-lg font-semibold leading-snug text-verde-900 group-hover:text-verde-700">{d.nombre}</h3>
+    <p class="mt-2 text-sm text-grafito">
+      {enConstruccion ? 'Información en construcción' : d.servicios.join(' · ')}
+    </p>
+  </div>
+</a>

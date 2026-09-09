@@ -1,0 +1,32 @@
+{
+  "nombre": "Desayunador Parroquia San Bernardo",
+  "parroquia": "Parroquia de San Bernardo",
+  "orden": 2,
+  "resumen": "Cada viernes se preparan lonches para los familiares de pacientes del Hospital Civil y se sirve desayuno a quien llega al comedor.",
+  "direccion": "Plan de San Luis 1616",
+  "ciudad": "Guadalajara, Jalisco",
+  "horario": { "dias": "Todos los viernes", "inicio": "8:00", "fin": "10:30" },
+  "cifras": [
+    { "valor": "160", "etiqueta": "lonches al Hospital Civil", "detalle": "preparados de 8:00 a 9:00 y entregados a las 9:00 a familiares de pacientes" },
+    { "valor": "50", "etiqueta": "desayunos en el comedor", "detalle": "servidos a partir de las 9:30 a personas en situación de calle" }
+  ],
+  "jornada": [
+    { "hora": "8:00", "que": "Comienza la preparación de 160 lonches" },
+    { "hora": "9:00", "que": "Una parte del grupo sale a entregar los alimentos al Hospital Civil" },
+    { "hora": "9:30", "que": "Otra parte comienza a servir el desayuno en el comedor" }
+  ],
+  "notas": [
+    "El último viernes de cada mes se celebra la Santa Misa a las 9:00 para las personas que acuden al comedor y para voluntarios, servidores y bienhechores."
+  ],
+  "comoAyudar": [
+    "Sumarte al equipo que prepara los lonches los viernes por la mañana",
+    "Acompañar la entrega de alimentos en el Hospital Civil",
+    "Apoyar como bienhechor con pan, guisado o bebidas"
+  ],
+  "fotos": [
+    { "archivo": "san-bernardo-01-linea-de-servicio.webp", "alt": "Voluntarios preparando lonches en la línea de servicio del comedor" },
+    { "archivo": "san-bernardo-02-gelatinas.webp", "alt": "Gelatinas preparadas para acompañar el desayuno" },
+    { "archivo": "san-bernardo-03-lonches-listos.webp", "alt": "Bolsas de alimento listas para entregar" },
+    { "archivo": "san-bernardo-04-bebidas.webp", "alt": "Mesa con bebidas y alimento durante el servicio del comedor" }
+  ]
+}

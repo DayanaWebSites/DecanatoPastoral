@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TarjetaComedor from '../../components/ui/TarjetaComedor.astro';
+import Aviso from '../../components/ui/Aviso.astro';
+
+const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
+---
+<Base
+  titulo="Comedores asistenciales"
+  descripcion="Los tres comedores asistenciales del Decanato Dulce Nombre de Jesús en Guadalajara: Casa San Vicente, San Bernardo y El Tepeyac. Direcciones, horarios y cómo apoyar."
+>
+  <section class="bg-verde-900 pt-16 text-crema">
+    <div class="contenedor">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-oro-400">Pastoral Social</p>
+      <h1 class="mt-3 font-serif text-4xl font-semibold sm:text-5xl">Comedores asistenciales</h1>
+      <p class="mt-5 max-w-2xl text-[17px] leading-relaxed text-crema/90">
+        Tres comedores abiertos cada semana en el decanato. Si conoces a una persona en situación
+        de calle o de escasos recursos, aquí puedes decirle exactamente a dónde ir y a qué hora.
+      </p>
+    </div>
+    <div class="filete mt-12" aria-hidden="true"></div>
+  </section>
+
+  <section class="contenedor py-16">
+    <div class="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+      {comedores.map((c, i) => <TarjetaComedor comedor={c} prioridad={i === 0} />)}
+    </div>
+
+    <div class="contenedor-angosto mt-16 px-0">
+      <Aviso titulo="¿Quieres apoyar alguno de los comedores?">
+        Cada comedor recibe voluntarios y bienhechores. Puedes aportar tiempo, alimento o
+        insumos; también puedes acompañar la entrega a domicilio y al Hospital Civil.
+        <a class="font-semibold text-verde-700 underline underline-offset-4 hover:text-verde-600" href="/ayudar">Escríbenos aquí</a>
+        y te ponemos en contacto con el comedor que elijas.
+      </Aviso>
+    </div>
+  </section>
+</Base>

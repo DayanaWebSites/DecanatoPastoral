@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Boton from '../components/ui/Boton.astro';
+---
+<Base titulo="Página no encontrada" descripcion="La página que buscas no existe o cambió de dirección." noindex>
+  <section class="contenedor-angosto py-28 text-center">
+    <p class="font-serif text-6xl font-semibold text-oro-500">404</p>
+    <h1 class="mt-5 font-serif text-3xl font-semibold text-verde-900">Aquí no hay nada</h1>
+    <p class="mt-4 text-[17px] leading-relaxed text-grafito">
+      La página que buscas no existe o cambió de lugar. Desde aquí puedes seguir.
+    </p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <Boton href="/">Ir al inicio</Boton>
+      <Boton href="/comedores" variante="secundario">Ver los comedores</Boton>
+    </div>
+  </section>
+</Base>

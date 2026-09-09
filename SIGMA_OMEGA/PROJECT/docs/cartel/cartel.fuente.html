@@ -1,0 +1,69 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+@font-face{font-family:'SS4';src:url('serif.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'Inter';src:url('inter.woff2') format('woff2');font-weight:400 700}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:850px;height:1100px;background:#FCF9F2;font-family:'Inter',system-ui,sans-serif;color:#1B1A17}
+.hoja{position:absolute;inset:34px;border:3px solid #DEAB33;display:flex;flex-direction:column;overflow:hidden}
+.hoja::after{content:'';position:absolute;inset:7px;border:1px solid #DEAB33;opacity:.5;pointer-events:none}
+
+.banda{height:188px;flex:none;background:#04551F;display:flex;align-items:center;justify-content:center;
+       border-bottom:3px solid #DEAB33}
+.banda img{width:142px;height:142px;border-radius:50%;box-shadow:0 0 0 3px rgba(222,171,51,.5)}
+
+.cuerpo{flex:1;padding:40px 62px 0;display:flex;flex-direction:column}
+h1{font-family:'SS4',Georgia,serif;font-weight:600;font-size:37px;color:#04551F;
+   text-align:center;letter-spacing:.05em;line-height:1.14}
+.sep{width:140px;height:2px;background:#DEAB33;margin:16px auto 30px}
+p{font-size:20px;line-height:1.6;margin-bottom:18px}
+p b{color:#04551F;font-weight:700}
+.destacado{background:#FCF2D6;border-left:5px solid #DEAB33;padding:16px 20px;margin:8px 0 18px;
+           font-size:20.5px;line-height:1.52}
+
+.pie{flex:none;height:216px;margin:0 62px;border-top:1px solid rgba(222,171,51,.6);
+     display:flex;align-items:center;gap:26px}
+.qrbox{width:168px;height:168px;flex:none;background:#fff;border:2px solid #DEAB33;padding:9px}
+.qrbox img{width:100%;height:100%;display:block}
+.qrtxt{flex:1.5;min-width:0}
+.qrtxt .lbl{font-family:'SS4',Georgia,serif;font-size:21px;color:#04551F;font-weight:600;line-height:1.25}
+.qrtxt .url{font-size:13px;color:#5A574F;margin-top:8px;line-height:1.35;word-break:break-word}
+.firma{flex:none;max-width:245px;text-align:right;font-size:14px;color:#5A574F;line-height:1.5;
+       border-left:1px solid rgba(222,171,51,.55);padding-left:26px}
+.firma strong{display:block;color:#04551F;font-size:16px;font-weight:700;margin-bottom:3px}
+</style></head><body>
+ <div class="hoja">
+  <div class="banda"><img src="logo.png" alt=""></div>
+
+  <div class="cuerpo">
+    <h1>AVISO DE FOTOGRAFÍA Y VIDEO</h1>
+    <div class="sep"></div>
+
+    <p>En este comedor se realizan fotografías y videos de manera ocasional, con fines
+       de comunicación y difusión de la obra de la Pastoral Social.</p>
+
+    <p>Las fotografías pueden incluir de manera incidental a personas que se encuentren
+       dentro de las instalaciones. <b>Antes de publicarlas difuminamos los rostros de
+       las personas atendidas.</b></p>
+
+    <div class="destacado">
+      <b>Si no desea aparecer en fotografías o videos, dígalo a nuestro personal al
+      ingresar.</b> No afecta en nada el servicio que recibe.
+    </div>
+
+    <p>También puede pedir en cualquier momento que retiremos una fotografía publicada
+       en la que aparezca de manera identificable.</p>
+  </div>
+
+  <div class="pie">
+    <div class="qrbox"><img src="qr.png" alt=""></div>
+    <div class="qrtxt">
+      <div class="lbl">Aviso de privacidad completo</div>
+      <div class="url">pastoralsocialdecanatodulcenombre.org/<wbr>aviso-de-privacidad</div>
+    </div>
+    <div class="firma">
+      <strong>Pastoral Social</strong>
+      Decanato Dulce Nombre de Jesús<br>
+      Arquidiócesis de Guadalajara
+    </div>
+  </div>
+ </div>
+</body></html>

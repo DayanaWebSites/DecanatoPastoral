@@ -1,0 +1,28 @@
+{
+  "nombre": "Comedor El Tepeyac",
+  "parroquia": "Parroquia El Tepeyac",
+  "orden": 3,
+  "resumen": "Comida caliente de lunes a viernes, servida en el comedor y llevada a domicilio a personas enfermas que no pueden salir de casa.",
+  "direccion": "Calle Jesús Ortiz 2411",
+  "ciudad": "Guadalajara, Jalisco",
+  "horario": { "dias": "Lunes a viernes", "inicio": "11:00", "fin": "15:00" },
+  "jornada": [
+    { "hora": "11:00 a 13:00", "que": "Preparación de los alimentos" },
+    { "hora": "13:00", "que": "Comienza el servicio a las personas que acuden al comedor" },
+    { "hora": "13:00", "que": "Salen las comidas a domicilio para personas enfermas que no pueden salir de casa" }
+  ],
+  "notas": [
+    "Muchas comidas se entregan de manera asistencial. Otras se venden a quien tiene posibilidad de pagarlas, y esos fondos ayudan a sostener el propio comedor."
+  ],
+  "comoAyudar": [
+    "Sumarte como voluntario en la cocina o en el servicio",
+    "Apoyar como bienhechor con despensa o insumos",
+    "Comprar tu comida ahí: con eso sostienes las comidas asistenciales"
+  ],
+  "fotos": [
+    { "archivo": "el-tepeyac-01-comidas-servidas.webp", "alt": "Charolas con comida servida y bolsas de alimento listas para entregar" },
+    { "archivo": "el-tepeyac-02-preparacion-pan.webp", "alt": "Voluntarios preparando pan en la cocina del comedor" },
+    { "archivo": "el-tepeyac-03-tortillas.webp", "alt": "Voluntaria preparando tortillas para el servicio del día" },
+    { "archivo": "el-tepeyac-04-cocina.webp", "alt": "Equipo de voluntarios trabajando en la cocina del comedor" }
+  ]
+}

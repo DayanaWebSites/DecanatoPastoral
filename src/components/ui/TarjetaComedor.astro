@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { comedor: CollectionEntry<'comedores'>; prioridad?: boolean }
+const { comedor, prioridad = false } = Astro.props;
+const d = comedor.data;
+
+const imagenes = import.meta.glob<{ default: ImageMetadata }>('../../assets/comedores/*.webp', { eager: true });
+const portada = d.fotos[0] ? imagenes[`../../assets/comedores/${d.fotos[0].archivo}`]?.default : undefined;
+---
+<article class="group emerger overflow-hidden rounded-xl2 border border-arena bg-white shadow-sm transition-shadow hover:shadow-lg">
+  <a href={`/comedores/${comedor.id}`} class="block focus-visible:outline-none">
+    {portada && (
+      <div class="aspect-[16/10] overflow-hidden bg-arena">
+        <Image
+          src={portada}
+          alt={d.fotos[0].alt}
+          widths={[360, 540, 720]}
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 46vw, 92vw"
+          quality={68}
+          loading={prioridad ? 'eager' : 'lazy'}
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+      </div>
+    )}
+    <div class="p-6">
+      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-verde-700">{d.parroquia}</p>
+      <h3 class="mt-2 text-xl font-semibold text-verde-900 group-hover:text-verde-700">{d.nombre}</h3>
+      <p class="mt-3 text-[15px] leading-relaxed text-grafito">{d.resumen}</p>
+
+      <dl class="mt-5 space-y-2 border-t border-arena pt-4 text-sm">
+        <div class="flex gap-2">
+          <dt class="sr-only">Dirección</dt>
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-oro-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg>
+          <dd class="text-tinta/80">{d.direccion}</dd>
+        </div>
+        <div class="flex gap-2">
+          <dt class="sr-only">Horario</dt>
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-oro-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" stroke-linecap="round" /></svg>
+          <dd class="text-tinta/80">{d.horario.dias} · {d.horario.inicio} a {d.horario.fin}</dd>
+        </div>
+      </dl>
+
+      <p class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-verde-700">
+        Ver el comedor
+        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </p>
+    </div>
+  </a>
+</article>

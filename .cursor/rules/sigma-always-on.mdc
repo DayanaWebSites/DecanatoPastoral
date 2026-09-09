@@ -1,0 +1,29 @@
+---
+description: SIGMA siempre activo — Decanato Pastoral Social
+alwaysApply: true
+---
+
+# SIGMA_OMEGA
+
+proyecto: Decanato Pastoral Social
+id: 2335fb6d-3bbc-4f86-bb5d-09045e91b74c
+cronfix: hmncwtyhofmobhjatpbv
+schema: sigma_omega
+modulo: by-type-sitio-web-astro
+adr: adr-001-astro-sobre-next
+
+## Boot
+
+1. Leer `CLAUDE.md` y `AGENTS.md`
+2. Si hay plan activo: su `README.plan.md` y `_shared/01-guardrails.md`
+3. Consultar CRONFIX antes de una decisión de stack. No asumir Next, no asumir auth
+4. GitNexus `query` antes de abrir archivos (cuando el índice exista)
+5. Cierre: `npm run build && npm run verify`. Commit sólo si Mario lo pide
+
+## No negociables
+
+- No inventar teléfonos, correos, horarios ni servicios
+- No publicar rostros identificables de personas atendidas
+- Todo dato editable en `src/content/` o `src/data/`
+- Cero JS al cliente salvo isla justificada en una frase
+- Paleta del logo, no el accent `#7144f5`

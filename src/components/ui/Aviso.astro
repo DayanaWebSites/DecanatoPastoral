@@ -1,0 +1,11 @@
+---
+interface Props { titulo?: string; tono?: 'oro' | 'verde' }
+const { titulo, tono = 'oro' } = Astro.props;
+---
+<div class:list={[
+  'rounded-xl2 border p-5 text-[15px] leading-relaxed',
+  tono === 'oro' ? 'border-oro-300 bg-oro-100/60 text-tinta/85' : 'border-verde-200 bg-verde-50 text-verde-900',
+]}>
+  {titulo && <p class="mb-1 font-semibold text-verde-900">{titulo}</p>}
+  <slot />
+</div>

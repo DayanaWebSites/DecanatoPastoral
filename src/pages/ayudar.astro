@@ -1,0 +1,156 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Aviso from '../components/ui/Aviso.astro';
+
+const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
+const errorEnvio = Astro.url.searchParams.get('error') === '1';
+
+const formas = [
+  {
+    titulo: 'Como voluntario',
+    texto: 'Preparar y servir el alimento, acompañar la entrega a domicilio o al Hospital Civil, o ayudar en la cocina. Se necesita tiempo, no experiencia.',
+    icono: 'manos',
+  },
+  {
+    titulo: 'Como bienhechor',
+    texto: 'Apoyar con alimento, pan, despensa, insumos de cocina o lo que cada comedor necesite esa semana.',
+    icono: 'canasta',
+  },
+  {
+    titulo: 'Canalizando a alguien',
+    texto: 'Si conoces a una persona en situación de calle o de escasos recursos, dile a dónde ir y a qué hora. Eso ya es ayudar.',
+    icono: 'mapa',
+  },
+  {
+    titulo: 'Con tu oración',
+    texto: 'Por quienes llegan a los comedores, por los voluntarios que sostienen el servicio y por quienes todavía no se atreven a acercarse.',
+    icono: 'oracion',
+  },
+];
+---
+<Base
+  titulo="Quiero ayudar"
+  descripcion="Súmate a la Pastoral Social del Decanato Dulce Nombre de Jesús como voluntario o bienhechor de alguno de los tres comedores asistenciales."
+>
+  <section class="bg-verde-900 pt-16 text-crema">
+    <div class="contenedor">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-oro-400">La Pastoral Social es tarea de todos</p>
+      <h1 class="mt-3 font-serif text-4xl font-semibold sm:text-5xl">Quiero ayudar</h1>
+      <p class="mt-5 max-w-2xl text-[17px] leading-relaxed text-crema/90">
+        No todos podemos hacer lo mismo, pero todos podemos hacer algo. Cada persona puede aportar
+        tiempo, escucha, oración, alimento, conocimientos, trabajo o compañía.
+      </p>
+    </div>
+    <div class="filete mt-12" aria-hidden="true"></div>
+  </section>
+
+  <section class="contenedor py-16" aria-labelledby="h-formas">
+    <h2 id="h-formas" class="sr-only">Formas de ayudar</h2>
+    <div class="grid gap-6 sm:grid-cols-2">
+      {formas.map((f) => (
+        <div class="emerger rounded-xl2 border border-arena bg-white p-7 shadow-sm">
+          <h3 class="font-serif text-2xl font-semibold text-verde-800">{f.titulo}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-tinta/80">{f.texto}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Formulario -->
+  <section class="bg-arena/60 py-16" aria-labelledby="h-form">
+    <div class="contenedor-angosto">
+      <h2 id="h-form" class="font-serif text-3xl font-semibold text-verde-900">Déjanos tus datos</h2>
+      <p class="mt-3 text-[17px] leading-relaxed text-grafito">
+        Nos pondremos en contacto contigo para decirte cómo y cuándo sumarte al comedor que elijas.
+      </p>
+
+      {errorEnvio && (
+        <div class="mt-8">
+          <Aviso titulo="No se pudo enviar">
+            El mensaje no llegó. Inténtalo de nuevo en unos minutos. Si el problema continúa,
+            acércate a tu parroquia o a alguno de los tres comedores.
+          </Aviso>
+        </div>
+      )}
+
+      <form
+        method="POST"
+        action="/api/contacto"
+        class="mt-9 space-y-6 rounded-xl2 border border-arena bg-white p-7 shadow-sm"
+      >
+        <!-- honeypot antispam: invisible para personas, tentador para bots -->
+        <div class="absolute h-0 w-0 overflow-hidden" aria-hidden="true">
+          <label for="apellido2">No llenar</label>
+          <input type="text" id="apellido2" name="apellido2" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="nombre" class="block text-sm font-semibold text-verde-900">Nombre <span class="text-oro-700" aria-hidden="true">*</span></label>
+            <input id="nombre" name="nombre" type="text" required autocomplete="name"
+              class="mt-2 w-full rounded-lg border border-arena bg-crema px-4 py-3 text-[15px] text-tinta placeholder:text-grafito/60 focus:border-verde-500 focus:outline-none focus:ring-2 focus:ring-verde-500/25" />
+          </div>
+          <div>
+            <label for="telefono" class="block text-sm font-semibold text-verde-900">Teléfono o WhatsApp <span class="text-oro-700" aria-hidden="true">*</span></label>
+            <input id="telefono" name="telefono" type="tel" required autocomplete="tel" inputmode="tel"
+              class="mt-2 w-full rounded-lg border border-arena bg-crema px-4 py-3 text-[15px] text-tinta focus:border-verde-500 focus:outline-none focus:ring-2 focus:ring-verde-500/25" />
+          </div>
+        </div>
+
+        <div>
+          <label for="correo" class="block text-sm font-semibold text-verde-900">Correo <span class="font-normal text-grafito">(opcional)</span></label>
+          <input id="correo" name="correo" type="email" autocomplete="email"
+            class="mt-2 w-full rounded-lg border border-arena bg-crema px-4 py-3 text-[15px] text-tinta focus:border-verde-500 focus:outline-none focus:ring-2 focus:ring-verde-500/25" />
+        </div>
+
+        <fieldset>
+          <legend class="text-sm font-semibold text-verde-900">¿Cómo te gustaría ayudar?</legend>
+          <div class="mt-3 space-y-2">
+            {['Como voluntario', 'Como bienhechor', 'Ambas', 'Quiero canalizar a una persona'].map((op, i) => (
+              <label class="flex cursor-pointer items-center gap-3 text-[15px] text-tinta/85">
+                <input type="radio" name="modo" value={op} checked={i === 0} class="h-4 w-4 accent-[#04551F]" />
+                {op}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="comedor" class="block text-sm font-semibold text-verde-900">¿En cuál comedor?</label>
+          <select id="comedor" name="comedor"
+            class="mt-2 w-full rounded-lg border border-arena bg-crema px-4 py-3 text-[15px] text-tinta focus:border-verde-500 focus:outline-none focus:ring-2 focus:ring-verde-500/25">
+            <option value="cualquiera">Donde más se necesite</option>
+            {comedores.map((c) => <option value={c.id}>{c.data.nombre}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label for="mensaje" class="block text-sm font-semibold text-verde-900">Cuéntanos algo más <span class="font-normal text-grafito">(opcional)</span></label>
+          <textarea id="mensaje" name="mensaje" rows="4"
+            class="mt-2 w-full rounded-lg border border-arena bg-crema px-4 py-3 text-[15px] text-tinta focus:border-verde-500 focus:outline-none focus:ring-2 focus:ring-verde-500/25"></textarea>
+        </div>
+
+        <label class="flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-tinta/80">
+          <input type="checkbox" name="privacidad" required class="mt-1 h-4 w-4 shrink-0 accent-[#04551F]" />
+          <span>
+            He leído el <a class="font-semibold text-verde-700 underline underline-offset-4" href="/aviso-de-privacidad">aviso de privacidad</a>
+            y acepto que se usen mis datos para ponerse en contacto conmigo.
+          </span>
+        </label>
+
+        <button type="submit"
+          class="w-full rounded-full bg-oro-500 px-6 py-3.5 text-[15px] font-semibold text-verde-900 transition-colors hover:bg-oro-400">
+          Enviar
+        </button>
+      </form>
+
+      <div class="mt-8">
+        <Aviso titulo="Nota para el equipo del decanato">
+          El envío de este formulario todavía no está conectado. Falta definir a qué correo o
+          WhatsApp deben llegar los mensajes de quienes quieren sumarse.
+        </Aviso>
+      </div>
+    </div>
+  </section>
+</Base>

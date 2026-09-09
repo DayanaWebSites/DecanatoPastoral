@@ -1,0 +1,17 @@
+---
+interface Props { texto: string; fuente: string; tono?: 'claro' | 'oscuro' }
+const { texto, fuente, tono = 'claro' } = Astro.props;
+---
+<figure class:list={[
+  'emerger rounded-xl2 border-l-4 p-6',
+  tono === 'claro' ? 'border-oro-500 bg-white/70' : 'border-oro-500 bg-verde-800/60',
+]}>
+  <blockquote class:list={[
+    'font-serif text-lg italic leading-relaxed',
+    tono === 'claro' ? 'text-verde-900' : 'text-crema',
+  ]}>{texto}</blockquote>
+  <figcaption class:list={[
+    'mt-3 text-sm font-semibold',
+    tono === 'claro' ? 'text-oro-700' : 'text-oro-300',
+  ]}>{fuente}</figcaption>
+</figure>

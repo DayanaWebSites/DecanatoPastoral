@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import decanato from '../data/decanato.json';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import serif600 from '@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2?url';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  noindex?: boolean;
+  /** JSON-LD adicional de la página (se suma al de la organización) */
+  jsonLd?: Record<string, unknown>;
+}
+const { titulo, descripcion, imagen, noindex = false, jsonLd: jsonLdPagina } = Astro.props;
+
+const url = new URL(Astro.url.pathname, Astro.site ?? 'https://pastoralsocialdecanatodulcenombre.org');
+const tituloCompleto = titulo === 'inicio'
+  ? `Pastoral Social · ${decanato.nombre}`
+  : `${titulo} · Pastoral Social ${decanato.nombre}`;
+const og = new URL(imagen ?? '/og.jpg', url).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: `Pastoral Social · ${decanato.nombre}`,
+  alternateName: 'Pastoral Social del Decanato Dulce Nombre de Jesús',
+  url: decanato.sitio,
+  parentOrganization: { '@type': 'Organization', name: decanato.arquidiocesis },
+  areaServed: { '@type': 'City', name: 'Guadalajara, Jalisco, México' },
+  description:
+    'Pastoral Social del Decanato Dulce Nombre de Jesús: tres comedores asistenciales, acompañamiento a enfermos y a personas en situación de calle.',
+};
+---
+
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={url.toString()} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#04551F" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={`Pastoral Social · ${decanato.nombre}`} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={url.toString()} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={og} />
+
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serif600} as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    {jsonLdPagina && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLdPagina)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Ir al contenido</a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

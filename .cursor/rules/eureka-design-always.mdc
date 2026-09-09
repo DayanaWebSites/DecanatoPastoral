@@ -1,0 +1,45 @@
+---
+description: Qué módulo EurekaDesign leer según la UI. Paleta del logo, no accent SIGMA.
+globs: ["**/*.astro", "**/*.css"]
+alwaysApply: false
+---
+
+# EurekaDesign — siempre, solo el módulo que aplica
+
+No se genera ni se edita UI a ojo. Se lee el módulo, se usan los tokens del repo, se audita.
+
+## Paleta canónica de ESTE proyecto
+
+Vive en `src/styles/global.css`, bloque `@theme`. Muestreada del logo oficial del decanato.
+**No se usa el accent canónico de EurekaDesign `#7144f5`.** El morado de SIGMA no entra
+en un sitio de iglesia.
+
+- verde `#04551F`
+- dorado `#DEAB33`
+- crema `#FCF9F2`
+- tinta `#1B1A17`
+
+## Antes de crear o cambiar un `.astro` / `.css` visual
+
+1. Taste: `.claude/skills/taste/SKILL.md`
+2. Índice: `SIGMA_OMEGA/DIRECTIVES/eureka-design/00-readme.md`
+3. **Un** módulo de la tabla, no la carpeta entera
+4. Al terminar: contraste AA. Anti-patterns de `08-anti-patterns.md`
+
+| Si vas a construir | Lee esto |
+|--------------------|----------|
+| Color, tipo, spacing | `01-tokens.md` + `src/styles/global.css` |
+| Login / sesión | No aplica. Ver ADR-001 |
+| Header, nav, skip-link | `03-navigation.md` |
+| Tablas de app | No aplica |
+| Formulario de voluntarios | `05-forms.md` |
+| Avisos, empty, gracias | `06-feedback.md` |
+| Transiciones | `07-motion.md` |
+| Review visual / PR | `08-anti-patterns.md` |
+| Skills y pipeline QA | `09-skills-rules.md` |
+
+## Por qué
+
+EurekaDesign asume SaaS (Inter-only, toast, sidebar, magic link). Este repo es un sitio
+estático institucional. Leer el módulo correcto evita copiar glassmorphism de `02-auth.md`
+al header del decanato o meter Sonner en `/ayudar`.

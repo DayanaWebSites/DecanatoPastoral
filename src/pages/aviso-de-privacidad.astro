@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro';
+import Aviso from '../components/ui/Aviso.astro';
+import decanato from '../data/decanato.json';
+
+const actualizado = '9 de septiembre de 2026';
+const correo = decanato.contacto.correo ?? '[PENDIENTE: correo de contacto del decanato]';
+const telefono = decanato.contacto.telefono ?? '[PENDIENTE: teléfono de contacto]';
+const faltaContacto = !decanato.contacto.correo;
+
+const secciones = [
+  {
+    id: 'responsable',
+    titulo: '1. Identidad y domicilio del responsable',
+    parrafos: [
+      `La Pastoral Social del ${decanato.nombre}, perteneciente a la ${decanato.arquidiocesis}, es responsable del tratamiento de los datos personales que recaba a través de este sitio y de sus comedores asistenciales.`,
+      `Para efectos de este aviso, el responsable está representado por el encargado de la Pastoral Social del decanato en su parte asistencial, ${decanato.encargadoPastoralSocial}, bajo la autoridad del decano, ${decanato.decano}.`,
+      `Domicilio para oír y recibir notificaciones: los comedores asistenciales del decanato señalados en este sitio. Contacto: ${correo} · ${telefono}.`,
+    ],
+  },
+  {
+    id: 'datos',
+    titulo: '2. Datos personales que recabamos',
+    parrafos: ['Recabamos únicamente los datos indispensables para nuestra labor asistencial:'],
+    listas: [
+      {
+        titulo: 'De quienes desean sumarse como voluntarios o bienhechores',
+        items: [
+          'Nombre.',
+          'Teléfono o número de WhatsApp.',
+          'Correo electrónico, cuando la persona decide proporcionarlo.',
+          'El mensaje que la persona escribe voluntariamente en el formulario.',
+        ],
+      },
+      {
+        titulo: 'De quienes acuden a los comedores',
+        items: [
+          'Su imagen, cuando aparece de manera incidental en fotografías o videos tomados dentro de las instalaciones durante el servicio.',
+          'No se recaba nombre, domicilio, identificación oficial ni ningún otro dato de las personas atendidas como condición para recibir alimento.',
+        ],
+      },
+    ],
+    cierre:
+      'No recabamos ni tratamos datos personales sensibles. No solicitamos datos patrimoniales, financieros ni de salud a través de este sitio.',
+  },
+  {
+    id: 'finalidades',
+    titulo: '3. Para qué usamos sus datos',
+    parrafos: ['Sus datos personales se utilizan para las siguientes finalidades primarias, necesarias para la relación con usted:'],
+    listas: [
+      {
+        titulo: 'Finalidades primarias',
+        items: [
+          'Ponernos en contacto con usted cuando manifiesta su intención de colaborar como voluntario o bienhechor.',
+          'Organizar y coordinar el servicio de los comedores asistenciales.',
+          'Dar seguimiento a las solicitudes y mensajes recibidos por este sitio.',
+        ],
+      },
+      {
+        titulo: 'Finalidades secundarias',
+        items: [
+          'Difundir la labor de la Pastoral Social del decanato mediante fotografías y videos publicados en este sitio y en redes sociales, con fines de comunicación, promoción de la obra asistencial y convocatoria de nuevos voluntarios y bienhechores.',
+          'Invitarle a jornadas, colectas o celebraciones relacionadas con la Pastoral Social.',
+        ],
+      },
+    ],
+    cierre:
+      'Las finalidades secundarias no son necesarias para la relación con usted. Si no desea que sus datos se usen para ellas, puede manifestarlo en cualquier momento por los medios señalados en este aviso, sin que ello afecte en modo alguno la atención o el servicio que recibe.',
+  },
+  {
+    id: 'imagen',
+    titulo: '4. Tratamiento de fotografías y video',
+    parrafos: [
+      'En los comedores asistenciales se toman fotografías y videos de manera ocasional, con fines de comunicación y difusión de la obra. Aplicamos las siguientes medidas de forma permanente:',
+    ],
+    listas: [
+      {
+        titulo: 'Nuestras reglas de captación y publicación',
+        items: [
+          'Se coloca un aviso visible en la entrada de cada comedor, antes de que la persona ingrese, informando que se realizan fotografías y videos.',
+          'No se enfoca deliberadamente el rostro de una persona atendida. Sólo se toman fotografías generales del servicio.',
+          'Antes de publicar, se difumina el rostro de las personas atendidas, de modo que no resulten identificables.',
+          'No se publican imágenes de menores de edad identificables, salvo autorización expresa de quien ejerce la patria potestad o tutela.',
+          'Los voluntarios, servidores y sacerdotes que aparecen identificables lo hacen con su consentimiento.',
+          'Si alguna persona manifiesta que no desea aparecer, se registra internamente y se procura excluirla de las siguientes fotografías.',
+          'Si usted identifica una fotografía publicada en la que aparece de manera identificable y solicita su retiro, la retiramos.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'transferencias',
+    titulo: '5. Transferencias de datos',
+    parrafos: [
+      'No transferimos ni comercializamos sus datos personales con terceros. Sus datos permanecen dentro de la Pastoral Social del decanato y de las parroquias que lo conforman.',
+      'La única excepción es la transferencia a autoridades competentes cuando exista un requerimiento fundado y motivado, en los casos previstos por el artículo 37 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, para los cuales no se requiere su consentimiento.',
+    ],
+  },
+  {
+    id: 'arco',
+    titulo: '6. Sus derechos ARCO',
+    parrafos: [
+      'Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección de su información personal si está desactualizada, es inexacta o incompleta (Rectificación); que la eliminemos de nuestros registros cuando considere que no está siendo utilizada conforme a los principios y deberes que marca la normativa (Cancelación); así como oponerse al uso de sus datos personales para fines específicos (Oposición).',
+      `Para ejercer cualquiera de estos derechos, envíe su solicitud a ${correo}, indicando su nombre, un medio para comunicarle la respuesta, la descripción clara de los datos respecto de los que busca ejercer alguno de los derechos y cualquier elemento que facilite su localización.`,
+      'Daremos respuesta en un plazo máximo de veinte días hábiles contados desde la recepción de la solicitud.',
+    ],
+  },
+  {
+    id: 'revocacion',
+    titulo: '7. Revocación del consentimiento',
+    parrafos: [
+      'Usted puede revocar en cualquier momento el consentimiento que nos haya otorgado para el tratamiento de sus datos personales, incluida la publicación de su imagen. Para ello, envíe su solicitud al correo señalado en este aviso o comuníquelo directamente al personal del comedor.',
+      'La revocación surtirá efectos hacia el futuro. En el caso de material ya publicado, procederemos a retirarlo o a difuminar su rostro siempre que sea razonablemente posible hacerlo.',
+    ],
+  },
+  {
+    id: 'limitacion',
+    titulo: '8. Limitación del uso o divulgación',
+    parrafos: [
+      'Si desea dejar de recibir invitaciones o comunicaciones de la Pastoral Social del decanato, puede solicitarlo por los mismos medios. Su solicitud no afecta de ninguna manera el servicio asistencial que reciba.',
+    ],
+  },
+  {
+    id: 'seguridad',
+    titulo: '9. Medidas de seguridad',
+    parrafos: [
+      'Conservamos sus datos únicamente durante el tiempo necesario para las finalidades descritas y aplicamos medidas administrativas y técnicas razonables para protegerlos contra daño, pérdida, alteración, destrucción o uso, acceso o tratamiento no autorizado.',
+    ],
+  },
+  {
+    id: 'cookies',
+    titulo: '10. Cookies y tecnologías de rastreo',
+    parrafos: [
+      'Este sitio es estático y no utiliza cookies de rastreo, perfilado publicitario ni herramientas de análisis que identifiquen a las personas visitantes. No recabamos su información de navegación.',
+    ],
+  },
+  {
+    id: 'cambios',
+    titulo: '11. Cambios a este aviso',
+    parrafos: [
+      'Este aviso de privacidad puede sufrir modificaciones derivadas de nuevos requerimientos legales o de cambios en nuestras prácticas. Cualquier modificación se publicará en esta misma página, indicando la fecha de la última actualización.',
+    ],
+  },
+];
+---
+<Base
+  titulo="Aviso de privacidad"
+  descripcion="Aviso de privacidad integral de la Pastoral Social del Decanato Dulce Nombre de Jesús: qué datos recabamos, para qué los usamos, cómo tratamos las fotografías y cómo ejercer sus derechos ARCO."
+>
+  <section class="bg-verde-900 pt-14 text-crema">
+    <div class="contenedor">
+      <h1 class="font-serif text-4xl font-semibold sm:text-5xl">Aviso de privacidad integral</h1>
+      <p class="mt-4 max-w-2xl text-[17px] leading-relaxed text-crema/90">
+        Pastoral Social del {decanato.nombre} · {decanato.arquidiocesis}
+      </p>
+      <p class="mt-2 text-sm text-crema/85">Última actualización: {actualizado}</p>
+    </div>
+    <div class="filete mt-10" aria-hidden="true"></div>
+  </section>
+
+  <div class="contenedor-angosto py-14">
+    {faltaContacto && (
+      <div class="mb-10">
+        <Aviso titulo="Pendiente antes de publicar">
+          Este aviso necesita el correo y el teléfono oficiales del decanato para el ejercicio de
+          derechos ARCO. Están marcados como <strong>PENDIENTE</strong> en el texto y se llenan en
+          <code class="mx-1 rounded bg-white px-1.5 py-0.5 text-[13px]">src/data/decanato.json</code>.
+        </Aviso>
+      </div>
+    )}
+
+    <p class="text-[17px] leading-[1.8] text-tinta/85">
+      Este aviso se emite en cumplimiento de la Ley Federal de Protección de Datos Personales en
+      Posesión de los Particulares, su Reglamento y los Lineamientos del Aviso de Privacidad.
+    </p>
+
+    <nav aria-label="Contenido del aviso" class="mt-8 rounded-xl2 border border-arena bg-white p-6">
+      <h2 class="text-xs font-bold uppercase tracking-[0.14em] text-verde-700">Contenido</h2>
+      <ol class="mt-4 space-y-1.5 text-[15px]">
+        {secciones.map((s) => (
+          <li><a class="text-verde-700 underline-offset-4 hover:underline" href={`#${s.id}`}>{s.titulo}</a></li>
+        ))}
+      </ol>
+    </nav>
+
+    {secciones.map((s) => (
+      <section id={s.id} class="mt-12 scroll-mt-28">
+        <h2 class="font-serif text-2xl font-semibold text-verde-900">{s.titulo}</h2>
+        {s.parrafos?.map((p) => <p class="mt-4 text-[16px] leading-[1.8] text-tinta/85">{p}</p>)}
+        {s.listas?.map((l) => (
+          <div class="mt-6">
+            <h3 class="text-sm font-bold uppercase tracking-[0.1em] text-oro-700">{l.titulo}</h3>
+            <ul class="mt-3 space-y-2.5">
+              {l.items.map((it) => (
+                <li class="flex gap-3 text-[16px] leading-relaxed text-tinta/85">
+                  <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-oro-500" aria-hidden="true"></span>
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        {s.cierre && <p class="mt-5 text-[16px] leading-[1.8] text-tinta/85">{s.cierre}</p>}
+      </section>
+    ))}
+
+    <section class="mt-14 rounded-xl2 border border-verde-200 bg-verde-50 p-7">
+      <h2 class="font-serif text-2xl font-semibold text-verde-900">¿Aparece usted en una fotografía?</h2>
+      <p class="mt-3 text-[16px] leading-relaxed text-tinta/85">
+        Si identifica una fotografía publicada en este sitio en la que aparece de manera
+        identificable y desea que la retiremos, escríbanos a {correo}. La retiraremos.
+      </p>
+    </section>
+  </div>
+</Base>

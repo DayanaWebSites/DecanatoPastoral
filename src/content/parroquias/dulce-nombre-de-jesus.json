@@ -1,0 +1,12 @@
+{
+  "nombre": "Dulce Nombre de Jesús",
+  "orden": 1,
+  "estado": "publicada",
+  "servicios": [
+    "Comedor asistencial"
+  ],
+  "contacto": {},
+  "imagen": "dulce-nombre-de-jesus.webp",
+  "comedor": "casa-san-vicente",
+  "nota": "En la capilla del Dulce Nombre de Jesús opera el Desayunador Casa San Vicente."
+}

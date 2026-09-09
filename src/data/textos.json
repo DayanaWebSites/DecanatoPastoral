@@ -1,0 +1,67 @@
+{
+  "hero": {
+    "kicker": "Pastoral Social",
+    "titulo": "Una Iglesia que ama, sirve y acompaña",
+    "entrada": "Porque en cada hermano que necesita, Cristo nos espera.",
+    "ctaPrimario": { "texto": "Conoce los comedores", "href": "/comedores" },
+    "ctaSecundario": { "texto": "Quiero ayudar", "href": "/ayudar" }
+  },
+  "queEs": {
+    "titulo": "Qué es la Pastoral Social",
+    "parrafos": [
+      "La Pastoral Social es la expresión del amor de la Iglesia hacia nuestros hermanos, especialmente hacia quienes viven alguna situación de pobreza, necesidad, enfermedad, soledad, abandono, privación de su libertad o exclusión.",
+      "No se trata solamente de dar ayuda material. Se trata de mirar, escuchar, acompañar y servir con amor, reconociendo en cada persona a un hermano con la dignidad que Dios le ha dado.",
+      "Queremos ser una Iglesia cercana, que no permanezca indiferente ante el sufrimiento de los demás y que, con pequeñas y grandes acciones, haga presente el amor de Jesús."
+    ]
+  },
+  "dilexiTe": {
+    "titulo": "Como nos recuerda el papa León XIV en Dilexi te",
+    "citaPrincipal": "El amor a los que son pobres […] es la garantía evangélica de una Iglesia fiel al corazón de Dios.",
+    "puntos": [
+      "El amor a los pobres no es una actividad opcional, sino una dimensión esencial de la vida de la Iglesia.",
+      "El amor a los pobres no es algo secundario para un cristiano, sino una consecuencia directa del amor de Cristo.",
+      "Ningún gesto de afecto, ni siquiera el más pequeño, será olvidado, especialmente si está dirigido a quien vive en el dolor, en la soledad o en la necesidad.",
+      "No podemos amar a Cristo sin amar a los pobres.",
+      "Los pobres no son un problema, sino un recurso al cual acudir para acoger y vivir la esencia del Evangelio."
+    ]
+  },
+  "queHacemos": {
+    "titulo": "¿Qué hacemos?",
+    "entrada": "La Pastoral Social busca responder, de acuerdo con nuestras posibilidades y las necesidades de la comunidad, a distintas realidades:",
+    "acciones": [
+      { "titulo": "Acompañar", "texto": "A personas y familias que atraviesan alguna necesidad." },
+      { "titulo": "Compartir", "texto": "Alimentos, ropa, zapatos, medicamentos y otros apoyos." },
+      { "titulo": "Visitar", "texto": "A enfermos, adultos mayores y personas que viven solas." },
+      { "titulo": "Estar presentes", "texto": "Con quienes están presos o anexados." },
+      { "titulo": "Salir al encuentro", "texto": "De personas en situación de calle y migrantes." }
+    ],
+    "cierre": "Por eso, nuestra Pastoral Social quiere comenzar con algo muy sencillo: ver al que necesita, acercarnos, escuchar y hacer lo que esté a nuestro alcance. En la Pastoral Social no ayudamos simplemente a «personas necesitadas»; servimos a Cristo presente en ellas."
+  },
+  "invitacion": {
+    "titulo": "Una invitación",
+    "parrafos": [
+      "La Pastoral Social es tarea de todos.",
+      "Cada persona puede aportar algo: tiempo, escucha, oración, alimentos, conocimientos, trabajo, compañía o simplemente un corazón dispuesto a acercarse.",
+      "No todos podemos hacer lo mismo, pero todos podemos hacer algo."
+    ],
+    "lema": { "texto": "Yo te he amado.", "fuente": "Apocalipsis 3,9 — lema de la exhortación Dilexi te" },
+    "cierre": "Que nuestro Decanato sea una comunidad donde nadie se sienta olvidado, donde podamos descubrir a Cristo en el rostro de nuestros hermanos y donde el amor se convierta en acciones concretas."
+  },
+  "citas": {
+    "titulo": "La Palabra de Dios nos invita a amar",
+    "lista": [
+      { "texto": "Cada vez que lo hicieron con el más pequeño de mis hermanos, lo hicieron conmigo.", "fuente": "Mateo 25,40" },
+      { "texto": "Tuve hambre y me dieron de comer; tuve sed y me dieron de beber.", "fuente": "Mateo 25,35" },
+      { "texto": "Hijos míos, no amemos de palabra ni de boca, sino con obras y de verdad.", "fuente": "1 Juan 3,18" },
+      { "texto": "La fe, si no tiene obras, está completamente muerta.", "fuente": "Santiago 2,17" },
+      { "texto": "El que se apiada del pobre presta al Señor, y él le recompensará.", "fuente": "Proverbios 19,17" },
+      { "texto": "El que da al pobre no sufrirá necesidad.", "fuente": "Proverbios 28,27" },
+      { "texto": "Dios ama al que da con alegría.", "fuente": "2 Corintios 9,7" },
+      { "texto": "Si tienes abundancia, da limosna en proporción a ella; si tienes poco, no temas dar de lo poco que tienes.", "fuente": "Tobías 4,8" },
+      { "texto": "No apartes tu rostro de ningún pobre, y así tampoco el rostro de Dios se apartará de ti.", "fuente": "Tobías 4,7" },
+      { "texto": "Hijo mío, no prives al pobre de lo necesario para vivir, ni hagas esperar al que mira con ojos suplicantes.", "fuente": "Eclesiástico 4,1" },
+      { "texto": "No rechaces al que te suplica atribulado, ni apartes tu rostro del pobre.", "fuente": "Eclesiástico 4,4" },
+      { "texto": "Cuando haya algún pobre entre tus hermanos […] no endurezcas tu corazón ni cierres tu mano a tu hermano pobre.", "fuente": "Deuteronomio 15,7" }
+    ]
+  }
+}
