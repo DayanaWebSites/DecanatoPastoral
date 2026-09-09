@@ -12,6 +12,7 @@
 - Contraste AA: kickers `oro-700` sobre crema; logos a densidad 2x.
 - CLS de fuentes (fallback metrics + `font-display: optional`).
 - Lighthouse mobile home 98/100/100/100.
+- nginx: `/comedores` 200, `/no-existe` 404 real y CSP en HTML (add_header no se heredaba).
 
 ### docs
 - Contrato de contenido para el panel de edición de fase 2.
