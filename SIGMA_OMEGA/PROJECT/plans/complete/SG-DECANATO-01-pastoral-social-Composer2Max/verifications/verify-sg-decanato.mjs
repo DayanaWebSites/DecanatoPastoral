@@ -17,6 +17,15 @@ const ok = (m) => oks.push(m);
 const falla = (m) => fallos.push(m);
 const avisa = (m) => avisos.push(m);
 
+// ── 0. Layout lock (SS-FLOTA-03e) ─────────────────────────────────────
+if (!existsSync(web)) falla('Falta apps/web/. El sitio NO vive en la raíz.');
+for (const sucio of ['src', 'public', 'astro.config.mjs', 'CHANGELOG.md', 'scripts']) {
+  if (existsSync(join(raiz, sucio))) {
+    falla(`Suciedad en raíz: ${sucio}. Producto = apps/web/. Changelog = SIGMA_OMEGA/PROJECT/. Scripts = SIGMA_OMEGA/CORE/.`);
+  }
+}
+if (existsSync(web)) ok('Layout: producto en apps/web, raíz sin src/public/astro.config.');
+
 const listar = (dir, ext) => {
   const out = [];
   const walk = (d) => {
@@ -105,7 +114,7 @@ for (const archivo of listar(join(web, 'src'), '.astro')) {
   const c = readFileSync(archivo, 'utf8');
   for (const [aguja, que] of datosDelDecanato) {
     if (c.includes(aguja)) {
-      falla(`${archivo.replace(raiz + '/', '')} tiene hardcodeado el ${que}. Debe venir de src/content/ o src/data/ (ADR-001, directiva 1).`);
+      falla(`${archivo.replace(raiz + '/', '')} tiene hardcodeado el ${que}. Debe venir de apps/web/src/content/ o apps/web/src/data/ (ADR-001, directiva 1).`);
     }
   }
 }

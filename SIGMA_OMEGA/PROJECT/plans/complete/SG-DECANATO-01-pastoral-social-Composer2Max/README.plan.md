@@ -1,5 +1,7 @@
 # SG-DECANATO-01 · Pastoral Social del Decanato Dulce Nombre de Jesús
 
+> **LAYOUT 2026-09-09:** el producto ya no está en raíz. Todo `src/`, `public/`, `astro.config.mjs` de este shot histórico = `apps/web/...`. Scripts = `SIGMA_OMEGA/CORE/dev/scripts/`. Ver `SIGMA_OMEGA/PROJECT/context/layout-lock.md`.
+
 ShotGenesis del sitio web de la Pastoral Social. Documento para leer, no para ejecutar.
 **El archivo que Cursor Build ejecuta es `.cursor/plans/SG-DECANATO-01-pastoral-social-Composer2Max.plan.md`.**
 

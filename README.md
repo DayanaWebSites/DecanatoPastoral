@@ -39,19 +39,21 @@ Las fotos de los comedores se publican con **el rostro de las personas atendidas
 difuminado**. Los originales sin procesar viven en `_source/`, que está en `.gitignore`
 y nunca se comitea.
 
-Para procesar fotos nuevas: `SIGMA_OMEGA/PROJECT/scripts/README.md`.
+Para procesar fotos nuevas: `SIGMA_OMEGA/CORE/dev/scripts/README.md`.
 
 ## Estructura SIGMA_OMEGA
 ```
 SIGMA_OMEGA/
 ├── DIRECTIVES/            EurekaDesign materializado (lo instala SE-01)
+├── CORE/scripts/          HEFESTO
+├── CORE/dev/scripts/      OG, difuminado de rostros, refs UI
 └── PROJECT/
     ├── docs/
-    ├── scripts/           difuminado de rostros
+    ├── context/           layout-lock
     └── plans/
         ├── active/        Shot en curso
         └── complete/      Shots cerrados y auditados
 ```
 
-El Shot vigente es `SG-DECANATO-01-pastoral-social-Composer2Max`.
-Se ejecuta desde `.cursor/plans/`, se documenta en `SIGMA_OMEGA/PROJECT/plans/active/`.
+Shots: SG-01 cerrado (histórico). Deploy = SB-02 en `shot/sb-decanato-02-deploy`. Panel = SB-03 (no mezclar).
+Producto = `apps/web/`. Prohibido `src/` en raíz.

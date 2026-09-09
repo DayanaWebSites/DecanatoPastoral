@@ -6,11 +6,11 @@
 1. **Contenido real, no de relleno.** Recorre las 23 páginas en `npm run preview`.
    Ninguna debe tener texto de plantilla ni un dato inventado del decanato.
 2. **Las 3 fichas de comedor** muestran dirección, horario y cifras correctas
-   contra `src/content/comedores/*.json`.
+   contra `apps/web/src/content/comedores/*.json`.
 3. **Las 13 parroquias** existen y las 10 sin datos dicen "Información en construcción".
 4. **Las 12 fotos**: abre cada una a tamaño completo y confirma que **ningún rostro
    de persona atendida quedó identificable**. Si encuentras uno, HALT: se reprocesa
-   con `SIGMA_OMEGA/PROJECT/scripts/difuminar-rostros.py` antes de seguir.
+   con `SIGMA_OMEGA/CORE/dev/scripts/difuminar-rostros.py` antes de seguir.
 5. **Enlaces internos**: ninguno a 404. Revisa header, footer y CTAs.
 6. **El formulario de /ayudar** sigue mostrando el aviso de "no está conectado".
    Si ya se conectó en el SG-01 task-01, ese aviso debe haber desaparecido.

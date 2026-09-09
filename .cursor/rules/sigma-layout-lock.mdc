@@ -1,0 +1,22 @@
+---
+description: Producto Astro vive en apps/web — prohibido suciedad en raíz
+alwaysApply: true
+---
+
+# Layout lock — DecanatoPastoral
+
+El sitio es `apps/web/` (Astro SSG). **HALT** si vas a crear en la raíz:
+`src/`, `public/`, `astro.config.mjs`, `CHANGELOG.md`, `scripts/`, `sites/`, `e2e/`.
+
+| Cosa | Dónde |
+|---|---|
+| Páginas, content, data, estilos, assets | `apps/web/src/` |
+| `astro.config.mjs` `tsconfig.json` `public/` | `apps/web/` |
+| HEFESTO | `SIGMA_OMEGA/CORE/scripts/` |
+| OG / rostros / refs | `SIGMA_OMEGA/CORE/dev/scripts/` |
+| Changelog | `SIGMA_OMEGA/PROJECT/CHANGELOG.md` |
+
+`npm run verify` falla si reaparece suciedad en raíz.
+Shots viejos que dicen `src/content` = `apps/web/src/content`.
+No mezclar SB-03 (panel) con mover carpetas. No forjar apex sin OK Mario.
+Canon: `SIGMA_OMEGA/PROJECT/context/layout-lock.md`

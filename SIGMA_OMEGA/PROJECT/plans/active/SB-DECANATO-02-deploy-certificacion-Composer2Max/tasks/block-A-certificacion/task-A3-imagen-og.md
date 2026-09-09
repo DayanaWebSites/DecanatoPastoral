@@ -10,7 +10,7 @@ Crear `public/og.jpg`, 1200×630, bajo 200 KB.
 
 Composición:
 - Fondo verde `#04551F`.
-- Escudo del decanato (`src/assets/decanato/logo-claro.webp`) a la izquierda,
+- Escudo del decanato (`apps/web/src/assets/decanato/logo-claro.webp`) a la izquierda,
   alto ~380 px, centrado vertical.
 - A la derecha, en dos líneas: "Pastoral Social" en serif grande crema `#FCF9F2`,
   y "Decanato Dulce Nombre de Jesús" debajo, más chico, en dorado `#DEAB33`.

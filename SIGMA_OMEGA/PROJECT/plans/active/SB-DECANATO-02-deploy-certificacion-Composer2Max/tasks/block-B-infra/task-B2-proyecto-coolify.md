@@ -27,7 +27,7 @@ tiene ninguna app del decanato. Se crea todo desde cero.
    chat**: se carga en el vault de ZENTINEK y en conversación sólo va prefijo +
    últimos 4.
 
-4. Confirmar que `astro.config.mjs` tiene `site` igual al dominio final. Si no,
+4. Confirmar que `apps/web/astro.config.mjs` tiene `site` igual al dominio final. Si no,
    el sitemap y los canonical salen mal y hay que rehacer el build.
 
 ## Gate

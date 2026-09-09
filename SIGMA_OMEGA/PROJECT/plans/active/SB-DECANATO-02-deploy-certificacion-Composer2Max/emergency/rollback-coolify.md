@@ -23,6 +23,6 @@ Si el cutover quedó a medias, revertir el registro DNS antes de tocar la app.
 
 ## Se publicó una foto con un rostro identificable
 Prioridad sobre todo lo demás:
-1. Quitar el archivo de `src/assets/comedores/`, build y deploy inmediato.
+1. Quitar el archivo de `apps/web/src/assets/comedores/`, build y deploy inmediato.
 2. `cdn_purge`.
 3. Avisar a Mario. Él decide qué se le dice al decanato.

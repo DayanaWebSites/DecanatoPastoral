@@ -10,7 +10,7 @@ Encima de esos, los de este Shot:
 3. **Producción no se toca sin la aprobación de Mario.** Ver `08-gates-zentinek.md`.
    Si un gate queda pendiente, se detiene el bloque y se le avisa. No se busca
    la vuelta con `force: true`.
-4. **No se despliega con datos inventados.** Si `src/data/decanato.json` sigue sin
+4. **No se despliega con datos inventados.** Si `apps/web/src/data/decanato.json` sigue sin
    correo, el sitio puede salir igual —el aviso de privacidad muestra el banner de
    pendiente—, pero eso se reporta explícitamente, no se esconde.
 5. **Si el sitio queda caído, se revierte primero y se investiga después.**

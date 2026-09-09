@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * Genera public/og.jpg 1200×630: logo sobre verde, filete dorado, sin personas.
+ * Genera apps/web/public/og.jpg 1200×630: logo sobre verde, filete dorado, sin personas.
  */
-import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
-const raiz = join(dirname(fileURLToPath(import.meta.url)), '../../..');
-const logo = await sharp(join(raiz, 'src/assets/decanato/logo-claro.webp'))
+const raiz = join(dirname(fileURLToPath(import.meta.url)), '../../../..');
+const web = join(raiz, 'apps/web');
+const logo = await sharp(join(web, 'src/assets/decanato/logo-claro.webp'))
   .resize(200, 200, { fit: 'contain', background: { r: 4, g: 85, b: 31, alpha: 0 } })
   .png()
   .toBuffer();
@@ -24,6 +24,6 @@ const overlay = Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3
 await sharp(overlay)
   .composite([{ input: logo, top: 160, left: 80 }])
   .jpeg({ quality: 88, mozjpeg: true })
-  .toFile(join(raiz, 'public/og.jpg'));
+  .toFile(join(web, 'public/og.jpg'));
 
-console.log('public/og.jpg 1200×630');
+console.log('apps/web/public/og.jpg 1200×630');

@@ -14,8 +14,8 @@ adr: adr-001-astro-sobre-next
 
 ## Boot
 
-1. Leer `CLAUDE.md` y `AGENTS.md`
-2. Si hay plan activo: su `README.plan.md` y `_shared/01-guardrails.md`
+1. Leer `CLAUDE.md`, `AGENTS.md` y `SIGMA_OMEGA/PROJECT/context/layout-lock.md`
+2. Si hay plan activo: su `README.plan.md`, `_shared/00-layout-lock.md` (si existe) y `_shared/01-guardrails.md`
 3. Consultar CRONFIX antes de una decisión de stack. No asumir Next, no asumir auth
 4. GitNexus `query` antes de abrir archivos (cuando el índice exista)
 5. Cierre: `npm run build && npm run verify`. Commit sólo si Mario lo pide

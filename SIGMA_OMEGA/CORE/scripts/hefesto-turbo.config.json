@@ -16,5 +16,5 @@
     "main": ["https://pastoralsocialdecanatodulcenombre.org/health"]
   },
   "vulkanoRepo": "git@github.com:DayanaWebSites/DecanatoPastoral.git",
-  "notes": "Astro SSG en apps/web. Forja = HEFESTO. Apex no se forja sin OK Mario. Coolify UUID se llena en SB-02."
+  "notes": "Producto = Astro SSG en apps/web (stack:next = dieta frontend-only, no es Next). Forja = HEFESTO. Apex no se forja sin OK Mario. Coolify UUID se llena en SB-02. Rama de trabajo = shot/sb-decanato-02-deploy."
 }

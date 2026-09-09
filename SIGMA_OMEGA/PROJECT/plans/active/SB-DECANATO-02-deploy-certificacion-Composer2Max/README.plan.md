@@ -28,7 +28,7 @@ evidencia del anterior.**
 - `Dockerfile` multi-stage (node:22-alpine → nginx:1.27-alpine) con health check.
 - `nginx.conf` con el `try_files` que Astro necesita, cache por tipo de archivo y
   **CSP sin `unsafe-inline`** — se puso `inlineStylesheets: 'never'` en
-  `astro.config.mjs` para que sea determinista que no hay `<style>` inline.
+  `apps/web/astro.config.mjs` para que sea determinista que no hay `<style>` inline.
   Verificado: 0 tags `<style>`, 0 scripts ejecutables (los 26 `<script>` del build
   son `application/ld+json`, que el navegador no ejecuta).
 - `public/og.jpg` renderizada con las fuentes reales del sitio.

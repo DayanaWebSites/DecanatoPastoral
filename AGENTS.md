@@ -8,8 +8,10 @@
 | Deploy | **HEFESTO → VULKANO → Coolify**. Prohibido Vercel / Neon. Apex no se forja sin OK Mario |
 | VERSION | Raíz + espejo `SIGMA_OMEGA/PROJECT/VERSION` |
 | CHANGELOG | Solo `SIGMA_OMEGA/PROJECT/CHANGELOG.md` |
-| HEFESTO | `node SIGMA_OMEGA/CORE/scripts/hefesto-turbo.mjs --branch preview` |
+| HEFESTO | `node SIGMA_OMEGA/CORE/scripts/hefesto-turbo.mjs --branch preview` — UUIDs Coolify vacíos hasta SB-02. Apex no se forja sin OK Mario |
+| Rama sitio | `shot/sb-decanato-02-deploy`. `main` remoto aún no tiene el sitio |
 | Outputs | `SIGMA_OMEGA/PROJECT/` — nunca `Claude outputs/` en raíz |
+| HALT | **Prohibido** recrear `src/`, `public/`, `astro.config.mjs`, `CHANGELOG.md` o `scripts/` en la raíz |
 
 ## Dónde vive cada cosa
 
@@ -18,7 +20,8 @@
 | Sitio Astro | `apps/web/` | `src/` o `public/` en raíz |
 | Contenido editable | `apps/web/src/content/`, `apps/web/src/data/` | Hardcode en `.astro` |
 | nginx / Dockerfile | Raíz (runtime) | Inventar otra capa |
-| HEFESTO | `SIGMA_OMEGA/CORE/scripts/` | `scripts/` en raíz |
+| HEFESTO | `SIGMA_OMEGA/CORE/scripts/` | `scripts/` en raíz. No turbo hasta UUIDs + OK Mario |
+| Scripts de producto (OG, rostros, refs) | `SIGMA_OMEGA/CORE/dev/scripts/` | `SIGMA_OMEGA/PROJECT/scripts/` · `scripts/` raíz |
 | Changelog | `SIGMA_OMEGA/PROJECT/CHANGELOG.md` | Raíz |
 | Explorer | `.vscode/settings.json` = stub canónico | Settings mezclados |
 
@@ -38,7 +41,9 @@ Mario: `cb4c7c08-2e17-40f2-b38b-b8b697767c24`
 
 - Módulo canónico: `sigma_omega.core` slug **`by-type-sitio-web-astro`**
 - ADR de stack: `sigma_omega.project_directives` slug **`adr-001-astro-sobre-next`**
-- Shot vigente: `SG-DECANATO-01-pastoral-social-Composer2Max`
+- Shot Genesis cerrado: `SG-DECANATO-01` (histórico: paths `src/` = hoy `apps/web/src/`)
+- Shot deploy: `SB-DECANATO-02` en `shot/sb-decanato-02-deploy`
+- Shot panel: `SB-DECANATO-03` — **no mezclar** con layout. Producto sigue en `apps/web/`
 
 Consulta CRONFIX antes de tomar cualquier decisión técnica. No asumas Next, auth ni CRUD.
 

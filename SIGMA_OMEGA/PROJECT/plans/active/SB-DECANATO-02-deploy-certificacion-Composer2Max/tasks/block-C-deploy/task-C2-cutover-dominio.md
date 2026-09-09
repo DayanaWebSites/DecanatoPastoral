@@ -18,7 +18,7 @@ sobre este mismo hostname.
 5. `cdn_purge` después del cutover.
 
 ## Antes de dar el paso
-Confirma que `astro.config.mjs` → `site` es exactamente el dominio final y que
+Confirma que `apps/web/astro.config.mjs` → `site` es exactamente el dominio final y que
 el build desplegado es posterior a ese cambio. Si no, el sitemap y los canonical
 apuntan al lugar equivocado y hay que redeployar.
 

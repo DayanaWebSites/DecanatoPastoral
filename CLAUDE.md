@@ -1,5 +1,12 @@
 # CLAUDE.md · Decanato Pastoral Social
 
+**LAYOUT LOCK (SS-FLOTA-03e):** el sitio vive en `apps/web/`.  
+Prohibido crear `src/`, `public/`, `astro.config.mjs`, `CHANGELOG.md` o `scripts/` en la raíz.  
+Contenido = `apps/web/src/content/` y `apps/web/src/data/`.  
+Scripts de producto = `SIGMA_OMEGA/CORE/dev/scripts/`.  
+HEFESTO = `SIGMA_OMEGA/CORE/scripts/`. Changelog = `SIGMA_OMEGA/PROJECT/CHANGELOG.md`.  
+Rama del sitio hoy: `shot/sb-decanato-02-deploy` (`main` aún no tiene el sitio).
+
 Contexto obligatorio antes de tocar este repo.
 
 ## Qué gobierna este proyecto
@@ -17,13 +24,19 @@ Astro 5, `output: 'static'`, cero JavaScript enviado al cliente.
 No es una app. No tiene auth, ni base de datos, ni CRUD. Si aparece esa necesidad,
 el módulo dice que se migra a `by-type-app-web` (Next). No se improvisa encima de Astro.
 
+## Si vas a tocar el panel de edición
+Lee `SIGMA_OMEGA/PROJECT/plans/active/SB-DECANATO-03-panel-edicion-Composer2Max/_shared/09-difuminado-obligatorio.md`
+antes que nada. El difuminado de rostros corre **en el navegador de quien sube la
+foto**, y publicar está bloqueado hasta que pasó por ahí. Ese candado no se
+desactiva "temporalmente para probar".
+
 ## Reglas duras
 1. **No inventar datos del decanato.** Teléfonos, correos, horarios y servicios sólo se
    publican si vinieron del cliente. Sin dato: `estado: en_construccion`.
 2. **Ningún rostro identificable de una persona atendida.** Las fotos se difuminan antes
    de publicarse. Los originales viven en `_source/`, ignorado por git.
-3. **Todo dato editable vive en `src/content/` o `src/data/`**, nunca hardcodeado en un
-   `.astro`. El auditor lo verifica y falla si se rompe.
+3. **Todo dato editable vive en `apps/web/src/content/` o `apps/web/src/data/`**, nunca
+   hardcodeado en un `.astro`. El auditor lo verifica y falla si se rompe.
 4. **Toda collection lleva esquema Zod.**
 5. **Imágenes siempre por `astro:assets`.** Nunca `<img>` crudo.
 6. **Islas sólo con interacción real** justificable en una frase. El menú móvil usa
@@ -33,7 +46,7 @@ el módulo dice que se migra a `by-type-app-web` (Next). No se improvisa encima 
 ## Paleta
 Muestreada del logo oficial del decanato, no del accent de EurekaDesign:
 verde `#04551F` · dorado `#DEAB33` · crema `#FCF9F2` · tinta `#1B1A17`.
-Definida en `src/styles/global.css`, bloque `@theme`. No se cambia sin pedirlo.
+Definida en `apps/web/src/styles/global.css`, bloque `@theme`. No se cambia sin pedirlo.
 
 ## Antes de dar por terminado
 ```bash
@@ -52,6 +65,7 @@ aparece un `<style>` inline, la CSP lo bloquea. Se arregla el origen, no la CSP.
 |---|---|---|
 | `SG-DECANATO-01-pastoral-social-Composer2Max` | Genesis: infra IA SIGMA, formulario, datos pendientes | activo |
 | `SB-DECANATO-02-deploy-certificacion-Composer2Max` | Certificación y deploy en 4 bloques | activo |
+| `SB-DECANATO-03-panel-edicion-Composer2Max` | Panel de edición para el decanato, 5 bloques | activo |
 
 Sus README están en `SIGMA_OMEGA/PROJECT/plans/active/<slug>/README.plan.md`.
 

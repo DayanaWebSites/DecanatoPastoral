@@ -15,7 +15,7 @@ nginx.conf        try_files para las carpetas de Astro, /health, cache, CSP
 - **`/_astro/` con `immutable` a 1 año** — los nombres llevan hash de contenido.
 - **HTML con `must-revalidate`** — el contenido cambia cuando el decanato manda datos.
 - **CSP sin `unsafe-inline`** — se puso `inlineStylesheets: 'never'` en
-  `astro.config.mjs` para que sea determinista que no hay `<style>` inline.
+  `apps/web/astro.config.mjs` para que sea determinista que no hay `<style>` inline.
   Verificado: 0 tags `<style>` y 0 scripts ejecutables en el build (los 26
   `<script>` son `application/ld+json`, que el navegador no ejecuta).
 
