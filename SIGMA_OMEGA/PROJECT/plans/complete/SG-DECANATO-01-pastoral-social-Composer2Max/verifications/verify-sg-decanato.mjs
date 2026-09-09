@@ -8,6 +8,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const raiz = process.cwd();
+const web = join(raiz, 'apps/web');
 const fallos = [];
 const avisos = [];
 const oks = [];
@@ -31,9 +32,9 @@ const listar = (dir, ext) => {
 };
 
 // ── 1. El build existe y tiene las páginas esperadas ────────────────────
-const dist = join(raiz, 'dist');
+const dist = join(web, 'dist');
 if (!existsSync(dist)) {
-  falla('No existe dist/. Corre `npm run build` antes de auditar.');
+  falla('No existe apps/web/dist/. Corre `npm run build` antes de auditar.');
 } else {
   const paginas = listar(dist, '.html');
   if (paginas.length < 23) falla(`Sólo ${paginas.length} páginas en dist/, se esperaban al menos 23.`);
@@ -100,7 +101,7 @@ const datosDelDecanato = [
   ['Plan de San Luis 1616', 'dirección de San Bernardo'],
   ['Jesús 778', 'dirección de Casa San Vicente'],
 ];
-for (const archivo of listar(join(raiz, 'src'), '.astro')) {
+for (const archivo of listar(join(web, 'src'), '.astro')) {
   const c = readFileSync(archivo, 'utf8');
   for (const [aguja, que] of datosDelDecanato) {
     if (c.includes(aguja)) {
@@ -111,8 +112,8 @@ for (const archivo of listar(join(raiz, 'src'), '.astro')) {
 if (!fallos.some((f) => f.includes('hardcodeado'))) ok('Ningún dato editable del decanato está hardcodeado en un .astro.');
 
 // ── 9. Toda collection tiene esquema Zod ───────────────────────────────
-const config = join(raiz, 'src/content.config.ts');
-if (!existsSync(config)) falla('Falta src/content.config.ts.');
+const config = join(web, 'src/content.config.ts');
+if (!existsSync(config)) falla('Falta apps/web/src/content.config.ts.');
 else {
   const c = readFileSync(config, 'utf8');
   for (const col of ['comedores', 'parroquias']) {
@@ -137,9 +138,9 @@ if (existsSync(join(raiz, '_source'))) {
 }
 
 // ── 11. Datos pendientes del cliente (aviso, no fallo) ─────────────────
-const decanato = JSON.parse(readFileSync(join(raiz, 'src/data/decanato.json'), 'utf8'));
-if (!decanato.contacto?.correo) avisa('src/data/decanato.json sin correo. El aviso de privacidad lo necesita para los derechos ARCO (task-02).');
-const parroquias = listar(join(raiz, 'src/content/parroquias'), '.json');
+const decanato = JSON.parse(readFileSync(join(web, 'src/data/decanato.json'), 'utf8'));
+if (!decanato.contacto?.correo) avisa('apps/web/src/data/decanato.json sin correo. El aviso de privacidad lo necesita para los derechos ARCO (task-02).');
+const parroquias = listar(join(web, 'src/content/parroquias'), '.json');
 const enObra = parroquias.filter((p) => JSON.parse(readFileSync(p, 'utf8')).estado === 'en_construccion');
 if (enObra.length) avisa(`${enObra.length} de ${parroquias.length} parroquias siguen en construcción (task-02).`);
 const sinImagen = parroquias.filter((p) => !JSON.parse(readFileSync(p, 'utf8')).imagen);

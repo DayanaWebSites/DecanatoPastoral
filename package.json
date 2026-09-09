@@ -5,10 +5,10 @@
   "type": "module",
   "description": "Sitio de la Pastoral Social del Decanato Dulce Nombre de Jesus — Arquidiocesis de Guadalajara",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
+    "dev": "astro dev --root apps/web",
+    "build": "astro build --root apps/web",
+    "preview": "astro preview --root apps/web",
+    "check": "astro check --root apps/web",
     "verify": "node SIGMA_OMEGA/PROJECT/plans/complete/SG-DECANATO-01-pastoral-social-Composer2Max/verifications/verify-sg-decanato.mjs"
   },
   "dependencies": {

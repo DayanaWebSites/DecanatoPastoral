@@ -1,6 +1,8 @@
 # build
 dist/
 .astro/
+apps/web/dist/
+apps/web/.astro/
 node_modules/
 
 # entorno

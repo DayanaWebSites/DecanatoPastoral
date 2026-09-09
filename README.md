@@ -14,8 +14,8 @@ Gobernado por el módulo SIGMA_OMEGA `by-type-sitio-web-astro` y el `adr-001-ast
 ```bash
 npm install
 npm run dev       # desarrollo en :4321
-npm run build     # build estático a dist/
-npm run preview   # sirve dist/
+npm run build     # build estático a apps/web/dist/
+npm run preview   # sirve apps/web/dist/
 npm run check     # tipos y content collections
 npm run verify    # auditoría del Shot (requiere build previo)
 ```
@@ -24,11 +24,11 @@ npm run verify    # auditoría del Shot (requiere build previo)
 Todo lo que el decanato puede querer cambiar está en JSON, nunca dentro de un componente:
 
 ```
-src/content/comedores/*.json    3 comedores
-src/content/parroquias/*.json   13 parroquias
-src/data/decanato.json          decano, encargado, contacto
-src/data/textos.json            todos los textos institucionales
-src/content.config.ts           esquemas Zod — el contrato de datos
+apps/web/src/content/comedores/*.json    3 comedores
+apps/web/src/content/parroquias/*.json   13 parroquias
+apps/web/src/data/decanato.json          decano, encargado, contacto
+apps/web/src/data/textos.json            todos los textos institucionales
+apps/web/src/content.config.ts           esquemas Zod — el contrato de datos
 ```
 
 Una parroquia sin información se marca `"estado": "en_construccion"` y la UI lo muestra

@@ -1,3 +1,30 @@
+<!-- SIGMA-FLOTA-03 -->
+# Ley del repo (SS-FLOTA-03)
+
+| Campo | Valor |
+|---|---|
+| Forma | `website` (Astro SSG) |
+| Producto | `apps/web/` — `src/`, `public/`, `astro.config.mjs` |
+| Deploy | **HEFESTO → VULKANO → Coolify**. Prohibido Vercel / Neon. Apex no se forja sin OK Mario |
+| VERSION | Raíz + espejo `SIGMA_OMEGA/PROJECT/VERSION` |
+| CHANGELOG | Solo `SIGMA_OMEGA/PROJECT/CHANGELOG.md` |
+| HEFESTO | `node SIGMA_OMEGA/CORE/scripts/hefesto-turbo.mjs --branch preview` |
+| Outputs | `SIGMA_OMEGA/PROJECT/` — nunca `Claude outputs/` en raíz |
+
+## Dónde vive cada cosa
+
+| Cosa | Dónde | No |
+|---|---|---|
+| Sitio Astro | `apps/web/` | `src/` o `public/` en raíz |
+| Contenido editable | `apps/web/src/content/`, `apps/web/src/data/` | Hardcode en `.astro` |
+| nginx / Dockerfile | Raíz (runtime) | Inventar otra capa |
+| HEFESTO | `SIGMA_OMEGA/CORE/scripts/` | `scripts/` en raíz |
+| Changelog | `SIGMA_OMEGA/PROJECT/CHANGELOG.md` | Raíz |
+| Explorer | `.vscode/settings.json` = stub canónico | Settings mezclados |
+
+Canon: ZENTINEK `SIGMA_OMEGA/PROJECT/context/sigma-layout-canon-v1.md`.
+<!-- /SIGMA-FLOTA-03 -->
+
 # AGENTS.md — Decanato Pastoral Social
 
 Proyecto: **Pastoral Social del Decanato Dulce Nombre de Jesús**
@@ -24,7 +51,7 @@ Consulta CRONFIX antes de tomar cualquier decisión técnica. No asumas Next, au
 | Contenido | Content Collections + Zod | — |
 | Imágenes | `astro:assets` + sharp | 0.34.x |
 | Fuentes | Inter variable + Source Serif 4, self-hosted | — |
-| Deploy | Coolify vía ZENTINEK. Prohibido Vercel | — |
+| Deploy | HEFESTO → Coolify. Prohibido Vercel | — |
 
 Cero JavaScript enviado al cliente. Si aparece auth real, roles o CRUD, se migra a
 `by-type-app-web`. No se improvisa encima de Astro.
@@ -46,15 +73,15 @@ Instaladas en `.claude/skills/`:
 
 ## God nodes
 
-- `src/data/textos.json`
-- `src/styles/global.css` (`@theme`)
-- `src/assets/comedores/*`
-- `src/pages/aviso-de-privacidad.astro`
+- `apps/web/src/data/textos.json`
+- `apps/web/src/styles/global.css` (`@theme`)
+- `apps/web/src/assets/comedores/*`
+- `apps/web/src/pages/aviso-de-privacidad.astro`
 - `.gitignore` (`_source/`)
 
 ## Versionado
 
-`MAJOR.MINOR.YYMMDDBB`. BB reinicia en 01 cada día. CHANGELOG en español.
+`MAJOR.MINOR.YYMMDDBB`. BB reinicia en 01 cada día. CHANGELOG solo en `SIGMA_OMEGA/PROJECT/CHANGELOG.md`.
 
 ## Cierre
 

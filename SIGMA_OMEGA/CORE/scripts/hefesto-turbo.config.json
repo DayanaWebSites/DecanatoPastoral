@@ -1,0 +1,20 @@
+{
+  "project": "DecanatoPastoral",
+  "image": "ghcr.io/eurekasigma/decanato-pastoral",
+  "registrySlug": "decanato-pastoral",
+  "stack": "next",
+  "defaultBranch": "preview",
+  "defaultForge": "vulkano",
+  "versionFiles": ["VERSION", "package.json"],
+  "hefestoReportUrl": "https://zentinek.com",
+  "coolify": {
+    "preview": { "uuid": "", "health": ["https://preview.pastoralsocialdecanatodulcenombre.org/health"] },
+    "main": { "uuid": "", "health": ["https://pastoralsocialdecanatodulcenombre.org/health"] }
+  },
+  "health": {
+    "preview": ["https://preview.pastoralsocialdecanatodulcenombre.org/health"],
+    "main": ["https://pastoralsocialdecanatodulcenombre.org/health"]
+  },
+  "vulkanoRepo": "git@github.com:DayanaWebSites/DecanatoPastoral.git",
+  "notes": "Astro SSG en apps/web. Forja = HEFESTO. Apex no se forja sin OK Mario. Coolify UUID se llena en SB-02."
+}
