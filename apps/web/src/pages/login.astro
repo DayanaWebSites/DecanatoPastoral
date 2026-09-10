@@ -6,8 +6,9 @@ import auth from '../data/auth.json';
 
 const raw = Astro.url.searchParams.get('next') || '/editar';
 const next = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/editar';
+const error = Astro.url.searchParams.get('error') || '';
 ---
 
 <AuthShell titulo={auth.login.titulo} subtitulo={auth.login.subtitulo}>
-  <LoginForm client:load next={next} />
+  <LoginForm client:load next={next} errorInicial={error} />
 </AuthShell>

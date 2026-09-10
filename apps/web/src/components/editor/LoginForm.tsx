@@ -41,8 +41,15 @@ function IconoOjo({ abierto }: { abierto: boolean }) {
   );
 }
 
-export default function LoginForm({ next }: { next: string }) {
-  const [err, setErr] = useState('');
+const errores: Record<string, string> = {
+  conexion: 'El panel se está conectando. Prueba en unos minutos.',
+  limite: 'Demasiados intentos. Espera 15 minutos.',
+  faltan: 'Escribe tu correo y tu contraseña.',
+  credenciales: 'Correo o contraseña incorrectos.',
+};
+
+export default function LoginForm({ next, errorInicial = '' }: { next: string; errorInicial?: string }) {
+  const [err, setErr] = useState(errores[errorInicial] ?? '');
   const [cargando, setCargando] = useState(false);
   const [ver, setVer] = useState(false);
   const correoRef = useRef<HTMLInputElement>(null);
@@ -54,6 +61,8 @@ export default function LoginForm({ next }: { next: string }) {
   return (
     <form
       className="space-y-4"
+      method="post"
+      action="/api/auth/login"
       onSubmit={async (e) => {
         e.preventDefault();
         setErr('');
@@ -63,7 +72,7 @@ export default function LoginForm({ next }: { next: string }) {
           const r = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ correo: fd.get('correo'), password: fd.get('password') }),
+            body: JSON.stringify({ correo: fd.get('correo'), password: fd.get('password'), next }),
           });
           const data = await r.json().catch(() => ({}));
           if (r.status === 503) {
@@ -90,6 +99,7 @@ export default function LoginForm({ next }: { next: string }) {
         }
       }}
     >
+      <input type="hidden" name="next" value={next} />
       <label className={authLabel} htmlFor="correo">
         Correo
         <span className="relative mt-1.5 block">

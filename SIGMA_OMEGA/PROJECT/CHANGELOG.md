@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.26090906 — 2026-09-09
+
+### fix
+- Login: la CSP del panel bloqueaba los scripts inline de Astro. Entrar ahora funciona sin JS (POST nativo) y con la isla.
+
 ## 0.1.26090905 — 2026-09-09
 
 ### fix
