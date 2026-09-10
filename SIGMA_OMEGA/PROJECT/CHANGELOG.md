@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.26090903 — 2026-09-09
+
+### feat
+- Login en pantalla partida: marca a la izquierda, formulario a la derecha, sin tarjeta flotante ni CTA oro.
+
 ## 0.1.26090902 — 2026-09-09
 
 ### feat

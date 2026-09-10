@@ -2,11 +2,9 @@
 export const prerender = false;
 import AuthShell from '../../layouts/AuthShell.astro';
 import { RecuperarForm } from '../../components/editor/AuthForms';
+import auth from '../../data/auth.json';
 ---
 
-<AuthShell
-  titulo="Recuperar contraseña"
-  subtitulo="Te mandamos un enlace si ese correo tiene cuenta. No decimos si existe o no."
->
+<AuthShell titulo={auth.recuperar.titulo} subtitulo={auth.recuperar.subtitulo}>
   <RecuperarForm client:load />
 </AuthShell>

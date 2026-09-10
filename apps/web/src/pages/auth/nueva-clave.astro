@@ -2,13 +2,14 @@
 export const prerender = false;
 import AuthShell from '../../layouts/AuthShell.astro';
 import { NuevaClaveForm } from '../../components/editor/AuthForms';
+import auth from '../../data/auth.json';
 const token = Astro.url.searchParams.get('token') || '';
 const obligatorio = Astro.url.searchParams.get('obligatorio') === '1';
 ---
 
 <AuthShell
-  titulo={obligatorio ? 'Elige tu contraseña' : 'Nueva contraseña'}
-  subtitulo="Mínimo 10 caracteres. La de ahora deja de servir en todos los dispositivos."
+  titulo={obligatorio ? auth.nuevaClave.tituloObligatorio : auth.nuevaClave.titulo}
+  subtitulo={auth.nuevaClave.subtitulo}
 >
   <NuevaClaveForm client:load token={token} obligatorio={obligatorio} />
 </AuthShell>

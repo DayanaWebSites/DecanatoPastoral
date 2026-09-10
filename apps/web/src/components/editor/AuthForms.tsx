@@ -1,9 +1,5 @@
 import { useState } from 'react';
-
-const campo =
-  'mt-1 h-11 w-full rounded-lg border border-arena bg-crema px-4 text-base text-tinta focus:border-verde-500 focus:ring-2 focus:ring-verde-500/25';
-const cta =
-  'h-11 w-full rounded-full bg-oro-500 text-[15px] font-semibold text-verde-900 transition duration-100 hover:bg-oro-400 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50';
+import { authCampo, authCta, authLabel } from './auth-ui';
 
 export function RecuperarForm() {
   const [msg, setMsg] = useState('');
@@ -28,11 +24,19 @@ export function RecuperarForm() {
         }
       }}
     >
-      <label className="block text-sm font-medium text-tinta" htmlFor="correo-rec">
+      <label className={authLabel} htmlFor="correo-rec">
         Correo
-        <input id="correo-rec" name="correo" type="email" inputMode="email" required autoComplete="username" className={campo} />
+        <input
+          id="correo-rec"
+          name="correo"
+          type="email"
+          inputMode="email"
+          required
+          autoComplete="username"
+          className={`${authCampo} mt-1.5`}
+        />
       </label>
-      <button className={cta} type="submit" disabled={cargando}>
+      <button className={authCta} type="submit" disabled={cargando}>
         {cargando ? 'Enviando…' : 'Enviar enlace'}
       </button>
       {msg && <p className="text-sm text-verde-800" role="status">{msg}</p>}
@@ -68,17 +72,17 @@ export function NuevaClaveForm({ token, obligatorio }: { token: string; obligato
       }}
     >
       {obligatorio && !token && (
-        <label className="block text-sm font-medium text-tinta" htmlFor="actual">
+        <label className={authLabel} htmlFor="actual">
           Contraseña actual
-          <input id="actual" name="actual" type="password" autoComplete="current-password" className={campo} />
+          <input id="actual" name="actual" type="password" required autoComplete="current-password" className={`${authCampo} mt-1.5`} />
         </label>
       )}
-      <label className="block text-sm font-medium text-tinta" htmlFor="nueva">
+      <label className={authLabel} htmlFor="nueva">
         Nueva contraseña
-        <input id="nueva" name="nueva" type="password" required minLength={10} autoComplete="new-password" className={campo} />
+        <input id="nueva" name="nueva" type="password" required minLength={10} autoComplete="new-password" className={`${authCampo} mt-1.5`} />
       </label>
-      {err && <p className="text-sm text-red-800" role="alert">{err}</p>}
-      <button className={cta} type="submit" disabled={cargando}>
+      {err && <p className="rounded-md border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-900" role="alert">{err}</p>}
+      <button className={authCta} type="submit" disabled={cargando}>
         {cargando ? 'Guardando…' : 'Guardar'}
       </button>
     </form>

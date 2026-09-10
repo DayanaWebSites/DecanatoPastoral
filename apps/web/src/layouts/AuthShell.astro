@@ -1,7 +1,11 @@
 ---
 import '../styles/global.css';
 import { Image } from 'astro:assets';
-import logo from '../assets/decanato/logo-oscuro.webp';
+import logoClaro from '../assets/decanato/logo-claro.webp';
+import logoOscuro from '../assets/decanato/logo-oscuro.webp';
+import decanato from '../data/decanato.json';
+import textos from '../data/textos.json';
+import auth from '../data/auth.json';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import serif600 from '@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2?url';
 
@@ -10,54 +14,81 @@ interface Props {
   subtitulo?: string;
 }
 const { titulo, subtitulo } = Astro.props;
+const marca = textos.hero.kicker;
 ---
 
 <html lang="es-MX">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titulo} · Pastoral Social</title>
+    <title>{titulo} · {marca}</title>
     <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#04551F" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={serif600} as="font" type="font/woff2" crossorigin />
   </head>
-  <body class="relative min-h-dvh bg-crema text-tinta">
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-[22rem] bg-verde-900" aria-hidden="true">
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(222,171,51,0.22),transparent_55%)]"></div>
-      <div class="absolute inset-x-0 bottom-0">
-        <div class="filete"></div>
-      </div>
-    </div>
-
-    <main class="relative mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center px-5 py-14">
-      <div class="rounded-2xl border border-arena bg-white px-8 py-10 shadow-md">
-        <div class="text-center">
+  <body class="min-h-dvh bg-crema text-tinta">
+    <div class="h-1 bg-oro-500 lg:hidden" aria-hidden="true"></div>
+    <div class="lg:grid lg:min-h-dvh lg:grid-cols-[minmax(18rem,0.88fr)_minmax(0,1.12fr)]">
+      <aside class="relative hidden overflow-hidden bg-verde-950 text-crema lg:flex lg:flex-col lg:justify-between lg:px-14 lg:py-14">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_0%,var(--color-oro-500)_0%,transparent_42%)] opacity-20" aria-hidden="true"></div>
+        <div class="absolute inset-y-0 right-0 w-px bg-oro-500/45" aria-hidden="true"></div>
+        <div class="relative">
           <Image
-            src={logo}
-            alt="Escudo del Decanato Dulce Nombre de Jesús"
-            width={88}
-            height={88}
+            src={logoClaro}
+            alt={`Escudo del ${decanato.nombre}`}
+            width={72}
+            height={72}
             densities={[2]}
-            class="mx-auto h-[5.5rem] w-[5.5rem]"
+            class="h-[4.5rem] w-[4.5rem]"
           />
-          <p class="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-oro-700">
-            Pastoral Social
-          </p>
-          <p class="mt-1 text-[11px] uppercase tracking-[0.16em] text-grafito">
-            Dulce Nombre de Jesús
-          </p>
-          <h1 class="mt-6 font-serif text-3xl font-semibold text-verde-900">{titulo}</h1>
-          {subtitulo && <p class="mt-3 text-[15px] leading-relaxed text-grafito">{subtitulo}</p>}
+          <p class="mt-10 font-serif text-3xl font-semibold leading-tight">{marca}</p>
+          <p class="mt-2 text-sm leading-relaxed text-crema/88">{decanato.nombre}</p>
+          <div class="mt-8 h-px w-14 bg-oro-500" aria-hidden="true"></div>
+          <p class="mt-8 max-w-sm text-[15px] leading-relaxed text-crema/80">{auth.descripcion}</p>
         </div>
-        <slot />
-      </div>
-      <p class="mt-8 text-center text-sm">
-        <a class="text-verde-700 underline decoration-oro-500/60 underline-offset-4 hover:text-verde-800" href="/">
-          Volver al sitio
-        </a>
-      </p>
-    </main>
+        <p class="relative text-sm text-crema/60">{decanato.arquidiocesis}</p>
+      </aside>
+
+      <main class="flex min-h-[calc(100dvh-0.25rem)] flex-col justify-center overflow-x-hidden px-5 py-12 sm:px-10 lg:min-h-dvh">
+        <div class="mx-auto w-full max-w-[400px]">
+          <div class="mb-10 flex items-center gap-3 lg:hidden">
+            <Image
+              src={logoOscuro}
+              alt={`Escudo del ${decanato.nombre}`}
+              width={44}
+              height={44}
+              densities={[2]}
+              class="h-11 w-11"
+            />
+            <span class="leading-tight">
+              <span class="block font-serif text-base font-semibold text-verde-900">{marca}</span>
+              <span class="block text-xs text-grafito">{decanato.nombre}</span>
+            </span>
+          </div>
+
+          <p class="text-sm font-medium text-verde-700">{auth.kicker}</p>
+          <h1 class="mt-2 font-serif text-[2rem] font-semibold leading-tight text-verde-900">{titulo}</h1>
+          {subtitulo && <p class="mt-2 text-[15px] leading-relaxed text-grafito">{subtitulo}</p>}
+          <div class="auth-form">
+            <slot />
+          </div>
+          <p class="mt-10 text-sm">
+            <a class="font-medium text-verde-700 underline-offset-4 hover:underline" href="/">{auth.volver}</a>
+          </p>
+        </div>
+      </main>
+    </div>
   </body>
 </html>
+
+<style>
+  .auth-form :global(input:focus),
+  .auth-form :global(input:focus-visible),
+  .auth-form :global(button:focus),
+  .auth-form :global(button:focus-visible) {
+    outline: none;
+    outline-offset: 0;
+  }
+</style>

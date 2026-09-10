@@ -1,11 +1,27 @@
-import { useState } from 'react';
-
-const campo =
-  'mt-1 h-11 w-full rounded-lg border border-arena bg-crema px-4 text-base text-tinta focus:border-verde-500 focus:ring-2 focus:ring-verde-500/25';
+import { useEffect, useRef, useState } from 'react';
+import { authCampoIcono, authCta, authLabel, authLink } from './auth-ui';
 
 function safeNext(n: string) {
   if (!n.startsWith('/') || n.startsWith('//')) return '/editar';
   return n;
+}
+
+function IconoCorreo() {
+  return (
+    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <rect x="3.5" y="6" width="17" height="12" rx="2" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m5 8.2 7 5.2 7-5.2" />
+    </svg>
+  );
+}
+
+function IconoCandado() {
+  return (
+    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <rect x="5.5" y="11" width="13" height="9" rx="1.8" />
+      <path strokeLinecap="round" d="M8 11V8.2a4 4 0 0 1 8 0V11" />
+    </svg>
+  );
 }
 
 function IconoOjo({ abierto }: { abierto: boolean }) {
@@ -29,6 +45,11 @@ export default function LoginForm({ next }: { next: string }) {
   const [err, setErr] = useState('');
   const [cargando, setCargando] = useState(false);
   const [ver, setVer] = useState(false);
+  const correoRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia('(pointer: fine)').matches) correoRef.current?.focus();
+  }, []);
 
   return (
     <form
@@ -69,60 +90,62 @@ export default function LoginForm({ next }: { next: string }) {
         }
       }}
     >
-      <label className="block text-sm font-medium text-tinta" htmlFor="correo">
+      <label className={authLabel} htmlFor="correo">
         Correo
-        <input
-          id="correo"
-          name="correo"
-          type="email"
-          inputMode="email"
-          required
-          autoFocus
-          autoComplete="username"
-          className={campo}
-        />
+        <span className="relative mt-1.5 block">
+          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-verde-800">
+            <IconoCorreo />
+          </span>
+          <input
+            ref={correoRef}
+            id="correo"
+            name="correo"
+            type="email"
+            inputMode="email"
+            required
+            autoComplete="username"
+            className={authCampoIcono}
+          />
+        </span>
       </label>
-      <label className="block text-sm font-medium text-tinta" htmlFor="password">
-        Contraseña
-        <span className="relative mt-1 block">
+      <div>
+        <label className={authLabel} htmlFor="password">Contraseña</label>
+        <span className="relative mt-1.5 block">
+          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-verde-800">
+            <IconoCandado />
+          </span>
           <input
             id="password"
             name="password"
             type={ver ? 'text' : 'password'}
             required
             autoComplete="current-password"
-            className={`${campo} mt-0 pr-12`}
+            className={`${authCampoIcono} pr-12`}
             aria-invalid={err ? true : undefined}
             aria-describedby={err ? 'login-error' : undefined}
           />
           <button
             type="button"
             tabIndex={-1}
-            className="absolute inset-y-0 right-0 grid w-11 place-items-center text-verde-700"
+            className="absolute inset-y-0 right-0 grid w-11 place-items-center text-verde-800 hover:text-verde-700"
             aria-label={ver ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             onClick={() => setVer((v) => !v)}
           >
             <IconoOjo abierto={ver} />
           </button>
         </span>
-      </label>
+        <p className="mt-2">
+          <a className={authLink} href="/auth/recuperar">Olvidé mi contraseña</a>
+        </p>
+      </div>
       {err && (
-        <p id="login-error" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800" role="alert">
+        <p id="login-error" className="rounded-md border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-900" role="alert">
           {err}
         </p>
       )}
-      <button
-        className="h-11 w-full rounded-full bg-oro-500 text-[15px] font-semibold text-verde-900 transition duration-100 hover:bg-oro-400 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
-        type="submit"
-        disabled={cargando}
-      >
+      <button className={authCta} type="submit" disabled={cargando}>
         {cargando ? 'Entrando…' : 'Entrar'}
       </button>
-      <p className="text-center text-sm">
-        <a className="text-verde-700 underline decoration-oro-500/60 underline-offset-4" href="/auth/recuperar">
-          Olvidé mi contraseña
-        </a>
-      </p>
     </form>
   );
 }
