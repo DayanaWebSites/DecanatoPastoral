@@ -8,8 +8,8 @@
   "versionFiles": ["VERSION", "package.json"],
   "hefestoReportUrl": "https://zentinek.com",
   "coolify": {
-    "preview": { "uuid": "", "health": ["https://preview.pastoralsocialdecanatodulcenombre.org/health"] },
-    "main": { "uuid": "", "health": ["https://pastoralsocialdecanatodulcenombre.org/health"] }
+    "preview": { "uuid": "nihyul3yga0ntudzvi0abxnm", "health": ["https://preview.pastoralsocialdecanatodulcenombre.org/health"] },
+    "main": { "uuid": "nihyul3yga0ntudzvi0abxnm", "health": ["https://pastoralsocialdecanatodulcenombre.org/health"] }
   },
   "health": {
     "preview": ["https://preview.pastoralsocialdecanatodulcenombre.org/health"],

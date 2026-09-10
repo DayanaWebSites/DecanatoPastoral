@@ -1,13 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaParroquia from '../../components/ui/TarjetaParroquia.astro';
 import Aviso from '../../components/ui/Aviso.astro';
+import { loadParroquias } from '../../lib/content/load';
+import PanelLayout from '../../layouts/PanelLayout.astro';
 
-const parroquias = (await getCollection('parroquias')).sort((a, b) => a.data.orden - b.data.orden);
+const editando = Astro.url.pathname.startsWith('/editar');
+const parroquias = await loadParroquias({ borrador: editando });
+const Layout = editando ? PanelLayout : Base;
 const pendientes = parroquias.filter((p) => p.data.estado === 'en_construccion').length;
 ---
-<Base
+<Layout
   titulo="Parroquias del decanato"
   descripcion="Las 13 parroquias que conforman el Decanato Dulce Nombre de Jesús de la Arquidiócesis de Guadalajara y los servicios de Pastoral Social que ofrece cada una."
 >
@@ -38,4 +41,4 @@ const pendientes = parroquias.filter((p) => p.data.estado === 'en_construccion')
       </div>
     )}
   </section>
-</Base>
+</Layout>

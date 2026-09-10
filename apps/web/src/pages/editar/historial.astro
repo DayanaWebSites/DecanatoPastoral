@@ -1,0 +1,33 @@
+---
+export const prerender = false;
+import PanelLayout from '../../layouts/PanelLayout.astro';
+import { puedeVerHistorial } from '../../lib/roles';
+if (!Astro.locals.user || !puedeVerHistorial(Astro.locals.user)) return Astro.redirect('/editar');
+---
+<PanelLayout titulo="Historial" descripcion="Quién tocó qué">
+  <section class="contenedor py-16">
+    <h1 class="font-serif text-3xl font-semibold text-verde-900">Historial</h1>
+    <p class="mt-3 text-grafito">Doce meses. Restaurar pone el valor anterior en el borrador, no lo publica.</p>
+    <div id="app" class="mt-8 overflow-x-auto text-sm"></div>
+  </section>
+  <script>
+    const root = document.getElementById('app')!;
+    const r = await fetch('/api/audit');
+    const data = await r.json();
+    root.innerHTML = `<table class="w-full text-left">
+      <thead><tr><th>Cuándo</th><th>Quién</th><th>Acción</th><th>Qué</th><th></th></tr></thead>
+      <tbody>${(data.eventos||[]).map((e: any) => `<tr class="border-t border-arena align-top">
+        <td class="py-2 whitespace-nowrap">${new Date(e.creado_en).toLocaleString('es-MX')}</td>
+        <td>${e.nombre || '—'}</td>
+        <td>${e.accion}</td>
+        <td>${e.entidad} ${e.entidad_id || ''}</td>
+        <td>${e.entidad === 'contenido' ? `<button data-id="${e.id}" class="underline">Restaurar</button>` : ''}</td>
+      </tr>`).join('')}</tbody></table>`;
+    root.addEventListener('click', async (ev) => {
+      const btn = (ev.target as HTMLElement).closest('button[data-id]');
+      if (!btn) return;
+      const res = await fetch('/api/audit', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: btn.getAttribute('data-id') }) });
+      if (res.ok) location.href = '/editar';
+    });
+  </script>
+</PanelLayout>

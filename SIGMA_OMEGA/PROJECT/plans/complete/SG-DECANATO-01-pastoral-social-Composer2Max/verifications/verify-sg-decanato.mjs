@@ -45,22 +45,41 @@ const dist = join(web, 'dist');
 if (!existsSync(dist)) {
   falla('No existe apps/web/dist/. Corre `npm run build` antes de auditar.');
 } else {
+  const server = existsSync(join(dist, 'server'));
   const paginas = listar(dist, '.html');
-  if (paginas.length < 23) falla(`Sólo ${paginas.length} páginas en dist/, se esperaban al menos 23.`);
-  else ok(`${paginas.length} páginas generadas.`);
+  if (server) {
+    ok('Build SSR (dist/server). El público se audita en HTML prerenderizado y en vivo.');
+  } else if (paginas.length < 23) {
+    falla(`Sólo ${paginas.length} páginas en dist/, se esperaban al menos 23.`);
+  } else {
+    ok(`${paginas.length} páginas generadas.`);
+  }
 
-  // ── 2. Cero JavaScript enviado al cliente ─────────────────────────────
-  const js = listar(dist, '.js');
-  if (js.length > 0) falla(`Se están enviando ${js.length} archivos .js al cliente. El estándar de este proyecto es 0. Revisa si alguna isla se coló: ${js.slice(0, 3).join(', ')}`);
-  else ok('0 archivos JavaScript enviados al cliente.');
+  // ── 2. Cero JavaScript en rutas públicas prerenderizadas ──────────────
+  const publicas = paginas.filter((p) => !/[\\/](editar|login|auth)[\\/]/.test(p));
+  const conJs = [];
+  for (const p of publicas) {
+    const h = readFileSync(p, 'utf8');
+    const ejecutables = [...h.matchAll(/<script(?![^>]*type="application\/ld\+json")[^>]*>/g)];
+    if (ejecutables.length) conJs.push(p.replace(raiz + '/', ''));
+  }
+  if (conJs.length) falla(`HTML público con JavaScript: ${conJs.join(', ')}. El bundle del editor sólo va en /editar.`);
+  else ok('HTML público prerenderizado sin JavaScript ejecutable.');
 
   // ── 3. Nada se carga desde terceros ───────────────────────────────────
-  const home = readFileSync(join(dist, 'index.html'), 'utf8');
-  const externos = [...home.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)]
-    .map((m) => m[1])
-    .filter((u) => !u.includes('pastoralsocialdecanatodulcenombre.org') && !u.includes('schema.org'));
-  if (externos.length) falla(`La home carga recursos de terceros: ${externos.join(', ')}`);
-  else ok('Cero recursos de terceros en la home.');
+  const muestra = existsSync(join(dist, 'index.html'))
+    ? join(dist, 'index.html')
+    : publicas.find((p) => p.endsWith('.html'));
+  if (muestra) {
+    const home = readFileSync(muestra, 'utf8');
+    const externos = [...home.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)]
+      .map((m) => m[1])
+      .filter((u) => !u.includes('pastoralsocialdecanatodulcenombre.org') && !u.includes('schema.org'));
+    if (externos.length) falla(`HTML público carga recursos de terceros: ${externos.join(', ')}`);
+    else ok('Cero recursos de terceros en el HTML público de muestra.');
+  } else {
+    avisa('Sin HTML de muestra para auditar terceros (todo es SSR). Se cubre en vivo.');
+  }
 
   // ── 4. SEO mínimo por página ──────────────────────────────────────────
   const titulos = new Set();
@@ -92,13 +111,16 @@ if (!existsSync(dist)) {
   else ok('Todas las imágenes llevan alt.');
 
   // ── 6. Sitemap y robots ───────────────────────────────────────────────
-  if (!existsSync(join(dist, 'sitemap-index.xml'))) falla('Falta sitemap-index.xml.');
+  const sitemap = existsSync(join(dist, 'sitemap-index.xml')) || existsSync(join(dist, 'client/sitemap-index.xml'));
+  if (!sitemap) falla('Falta sitemap-index.xml.');
   else ok('Sitemap generado.');
-  if (!existsSync(join(dist, 'robots.txt'))) falla('Falta robots.txt.');
+  const robots = existsSync(join(dist, 'robots.txt')) || existsSync(join(dist, 'client/robots.txt'));
+  if (!robots) falla('Falta robots.txt.');
   else ok('robots.txt presente.');
 
   // ── 7. Imagen OG ──────────────────────────────────────────────────────
-  if (!existsSync(join(dist, 'og.jpg'))) avisa('Falta public/og.jpg. El sitio va a circular por WhatsApp: la tarjeta se ve pobre sin ella (task-03).');
+  const og = existsSync(join(dist, 'og.jpg')) || existsSync(join(dist, 'client/og.jpg'));
+  if (!og) avisa('Falta public/og.jpg. El sitio va a circular por WhatsApp: la tarjeta se ve pobre sin ella (task-03).');
   else ok('Imagen OG presente.');
 }
 

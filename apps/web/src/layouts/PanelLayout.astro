@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import '../styles/hero-logo.css';
+import '../styles/editor.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import EditorApp from '../components/editor/EditorApp';
+import decanato from '../data/decanato.json';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import serif600 from '@fontsource/source-serif-4/files/source-serif-4-latin-600-normal.woff2?url';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const { titulo, descripcion } = Astro.props;
+const user = Astro.locals.user;
+const tituloCompleto = `${titulo} · Editar`;
+---
+
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="theme-color" content="#04551F" />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serif600} as="font" type="font/woff2" crossorigin />
+  </head>
+  <body class="edicion">
+    <a class="skip-link" href="#contenido">Ir al contenido</a>
+    {user && (
+      <EditorApp
+        client:load
+        usuario={{ nombre: user.nombre, rol: user.rol, nivel: user.nivel, parroquias: user.parroquias }}
+        rutaPublica={Astro.url.pathname.replace(/^\/editar/, '') || '/'}
+        decanato={decanato.nombre}
+      />
+    )}
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

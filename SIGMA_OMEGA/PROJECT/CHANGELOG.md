@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.26090902 — 2026-09-09
+
+### feat
+- Panel de edición SSR (Astro `output: 'server'`) detrás de nginx con micro-cache.
+- Login institucional (`/login`) con receta `auth-login` y paleta del logo, sin glass.
+- Hero: fondo fotográfico y un solo logo que viaja al nav al hacer scroll.
+
+### fix
+- `/login` deja de ser el 404 del sitio estático cuando Coolify construye esta rama.
+
 ## 0.1.26090901 — 2026-09-09
 
 ### feat

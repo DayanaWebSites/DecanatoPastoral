@@ -1,12 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaComedor from '../../components/ui/TarjetaComedor.astro';
 import Aviso from '../../components/ui/Aviso.astro';
+import { loadComedores } from '../../lib/content/load';
+import PanelLayout from '../../layouts/PanelLayout.astro';
 
-const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
+const editando = Astro.url.pathname.startsWith('/editar');
+const comedores = await loadComedores({ borrador: editando });
+const Layout = editando ? PanelLayout : Base;
 ---
-<Base
+<Layout
   titulo="Comedores asistenciales"
   descripcion="Los tres comedores asistenciales del Decanato Dulce Nombre de Jesús en Guadalajara: Casa San Vicente, San Bernardo y El Tepeyac. Direcciones, horarios y cómo apoyar."
 >
@@ -36,4 +39,4 @@ const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden
       </Aviso>
     </div>
   </section>
-</Base>
+</Layout>

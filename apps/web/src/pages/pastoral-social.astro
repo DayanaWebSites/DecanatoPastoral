@@ -4,10 +4,15 @@ import Base from '../layouts/Base.astro';
 import Cita from '../components/ui/Cita.astro';
 import Boton from '../components/ui/Boton.astro';
 import cartel from '../assets/decanato/cartel-carlo-acutis.webp';
-import textos from '../data/textos.json';
-import decanato from '../data/decanato.json';
+import { loadDecanato, loadTextos } from '../lib/content/load';
+import PanelLayout from '../layouts/PanelLayout.astro';
+
+const editando = Astro.url.pathname.startsWith('/editar');
+const textos = await loadTextos({ borrador: editando });
+const decanato = await loadDecanato({ borrador: editando });
+const Layout = editando ? PanelLayout : Base;
 ---
-<Base
+<Layout
   titulo="Qué es la Pastoral Social"
   descripcion="La Pastoral Social es la expresión del amor de la Iglesia hacia quienes viven pobreza, enfermedad, soledad o exclusión. Conoce qué hacemos en el Decanato Dulce Nombre de Jesús."
 >
@@ -100,4 +105,4 @@ import decanato from '../data/decanato.json';
       <Boton href="/comedores" variante="secundario">Ver los comedores</Boton>
     </div>
   </section>
-</Base>
+</Layout>

@@ -1,11 +1,12 @@
 # ADR-003 — Deploy en Coolify: Dockerfile nginx, cache y CSP
 
 Fecha: 2026-09-09
-Estado: ACEPTADA (runtime pendiente de Mario)
+Actualizado: 2026-09-10
+Estado: ACEPTADA (runtime en vivo)
 Proyecto: Decanato Dulce Nombre de Jesús — Pastoral Social
 Shot: SB-DECANATO-02-deploy-certificacion-Composer2Max
 Rama: `shot/sb-decanato-02-deploy`
-Commit en `main`: `2520e9799e7c8248ea76faf503f74a1761d0baa6`
+Commit en `main`: `defaeb6d30af6173564d3248c5d2309027ae9fe0`
 
 ## Contexto
 Sitio estático Astro 5. Coolify construye desde GitHub. El contenedor es nginx, no Node.
@@ -17,23 +18,29 @@ Sitio estático Astro 5. Coolify construye desde GitHub. El contenedor es nginx,
 3. **Cache.** `/_astro/` `public, immutable` 1 año. HTML `max-age=0, must-revalidate`. Imágenes/fuentes 30 días.
 4. **CSP.** `default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'`. Sin `unsafe-inline` ni `unsafe-eval`.
 5. **`inlineStylesheets: 'never'`** en `astro.config.mjs`. Si aparece un `<style>` inline, se arregla el origen, no la CSP. En nginx, cada `location` que usa `add_header` **repite** las cabeceras de seguridad: nginx no hereda `add_header` del `server` cuando el hijo declara uno.
-6. **OneClick no es el camino.** Provisiona Redis/memoria y asume puerto 3000. Se intentó un run con `reuseExistingDatabase: true` (`f8b10993-990a-49ea-8f9a-354b6ac688cf`) y murió en `provisioning_memory` (`fetch failed`) **antes** de crear app. `appUuid` sigue vacío. No se reintenta.
-7. **Apex.** `pastoralsocialdecanatodulcenombre.org` no está en `domain_list`. Cutover espera frase de Mario y confirmación de compra/zona Cloudflare.
+6. **OneClick no es el camino.** Provisiona Redis/memoria y asume puerto 3000. Los runs de preview murieron en `provisioning_memory` antes de `createApplication`. La app Dockerfile se creó aparte y se desplegó con el API de Coolify.
+7. **GitHub.** Coolify usa la source *Public GitHub* (`source_id = 0`). El repo se publicó para que el clone funcione. `main` en `defaeb6`.
+8. **DNS.** Zona Cloudflare `b8a625978b3933c9e34442fd6082c3fc` en la cuenta EurekaSigma. Apex, `preview` y `www` son A DNS-only a `93.188.162.107`. Correo Hostinger no se tocó.
+9. **Proxy.** Traefik/Caddy en Coolify con FQDN sslip + preview + apex + www. Let's Encrypt en los tres hostnames HTTPS.
 
 ## IDs
 | Recurso | Valor |
 |---|---|
 | projectId ZENTINEK | `d697de05-d529-4fbb-8e13-63f69b1a0e3f` |
-| appUuid Coolify | **pendiente** — hay que crear la app Dockerfile a mano o con `domain_doctor` `create_preview_app` cuando CF responda |
-| hostname objetivo | `pastoralsocialdecanatodulcenombre.org` |
-| hostname preview propuesto | `preview.decanato-pastoral.zentinek.com` (PREVIEW, sin frase) |
-| env preview | `be55357e-74f5-4f9c-91af-5136f0f7b7f5` (clasificado PREVIEW) |
+| appUuid Coolify | `nihyul3yga0ntudzvi0abxnm` |
+| hostname | `https://pastoralsocialdecanatodulcenombre.org` |
+| hostname www | `https://www.pastoralsocialdecanatodulcenombre.org` |
+| hostname preview | `https://preview.pastoralsocialdecanatodulcenombre.org` |
+| sslip (ops) | `http://nihyul3yga0ntudzvi0abxnm.93.188.162.107.sslip.io` |
+| env preview | `be55357e-74f5-4f9c-91af-5136f0f7b7f5` |
+| zoneId Cloudflare | `b8a625978b3933c9e34442fd6082c3fc` |
+| commit desplegado | `defaeb6d30af6173564d3248c5d2309027ae9fe0` |
 
-## Lo que falta (Mario)
-1. Crear en Coolify una app Dockerfile del repo `DayanaWebSites/DecanatoPastoral`, rama `main`, puerto 80, health `/health`.
-2. Aprobar `PUBLIC_SITE_URL` (`pendingActionId` `ddf1fd47-0671-437c-b22a-bb4db11e3f18`, expira 2026-09-09 22:24Z) o dictar la frase y reintentar `env_set`.
-3. Decir si el dominio ya está comprado y en qué zona de Cloudflare.
-4. Frase de autorización para el cutover del apex.
+## Evidencia en vivo (2026-09-10)
+- `verify-produccion.mjs` contra el apex: certificado, 0 avisos.
+- Lighthouse mobile apex: **99 / 100 / 100 / 100**, LCP 1.9 s.
+- Lighthouse mobile San Bernardo: **100 / 100 / 100 / 100**, LCP 1.3 s.
+- `/health` → `ok`. `/no-existe` → 404. CSP sin `unsafe-inline`.
 
 ## Consecuencias
-El bloque A está certificado en local (contenedor incluido). Los bloques C y D no se cierran sin URL pública.
+El sitio está publicado. No se envía el enlace a Angie ni al decanato hasta que Mario apruebe el mensaje.

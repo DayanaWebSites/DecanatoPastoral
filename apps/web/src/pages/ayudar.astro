@@ -1,9 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Aviso from '../components/ui/Aviso.astro';
+import { loadComedores } from '../lib/content/load';
+import PanelLayout from '../layouts/PanelLayout.astro';
 
-const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
+const editando = Astro.url.pathname.startsWith('/editar');
+const comedores = await loadComedores({ borrador: editando });
+const Layout = editando ? PanelLayout : Base;
 const errorEnvio = Astro.url.searchParams.get('error') === '1';
 
 const formas = [
@@ -29,7 +32,7 @@ const formas = [
   },
 ];
 ---
-<Base
+<Layout
   titulo="Quiero ayudar"
   descripcion="Súmate a la Pastoral Social del Decanato Dulce Nombre de Jesús como voluntario o bienhechor de alguno de los tres comedores asistenciales."
 >
@@ -153,4 +156,4 @@ const formas = [
       </div>
     </div>
   </section>
-</Base>
+</Layout>

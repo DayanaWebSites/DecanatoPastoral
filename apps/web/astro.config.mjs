@@ -2,20 +2,36 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import node from '@astrojs/node';
+import react from '@astrojs/react';
 
-// SIGMA_OMEGA — by-type-sitio-web-astro v1.0.0 | ADR-001
+// SIGMA_OMEGA — ADR-002: output server. El público sigue en 0 JS.
 export default defineConfig({
   site: 'https://pastoralsocialdecanatodulcenombre.org',
-  output: 'static',
+  output: 'server',
+  adapter: node({ mode: 'standalone' }),
   trailingSlash: 'ignore',
+  // Las escrituras del panel van con cookie httpOnly + SameSite=lax.
+  // checkOrigin rompe el refresh en local (Host ≠ site) y los scripts E1.
+  // El formulario público de contacto no usa cookie: honeypot + Zod.
+  security: { checkOrigin: false },
   integrations: [
+    react(),
     sitemap({
-      filter: (page) => !page.includes('/gracias'),
+      filter: (page) =>
+        !page.includes('/gracias') &&
+        !page.includes('/editar') &&
+        !page.includes('/login') &&
+        !page.includes('/auth') &&
+        !page.includes('/api/'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },
-  image: { responsiveStyles: true },
-  // 'never' hace determinista que no haya <style> inline, y eso permite
-  // una CSP sin 'unsafe-inline' en style-src. Ver nginx.conf.
+  image: {
+    responsiveStyles: true,
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.pastoralsocialdecanatodulcenombre.org' },
+    ],
+  },
   build: { inlineStylesheets: 'never' },
 });

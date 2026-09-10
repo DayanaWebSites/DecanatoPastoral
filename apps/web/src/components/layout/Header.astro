@@ -9,13 +9,25 @@ const enlaces = [
   { href: '/ayudar', texto: 'Quiero ayudar' },
 ];
 const ruta = Astro.url.pathname.replace(/\/$/, '') || '/';
+const esHome = ruta === '/' || ruta === '/editar';
 const activo = (h: string) => ruta === h || ruta.startsWith(h + '/');
 ---
 
-<header class="sticky top-0 z-50 border-b border-verde-800/40 bg-verde-900/95 backdrop-blur-md">
+<header class:list={['sticky top-0 z-50 border-b border-verde-800/40 bg-verde-900/95 backdrop-blur-md', esHome && 'es-home']}>
   <div class="contenedor flex items-center gap-4 py-3">
-    <a href="/" class="flex shrink-0 items-center gap-3 text-crema">
-      <Image src={logo} alt="" width={44} height={44} densities={[2]} loading="eager" class="h-11 w-11 rounded-full ring-1 ring-oro-500/50" />
+    <a href="/" class:list={['marca flex shrink-0 items-center gap-3 text-crema', esHome && 'marca-home']}>
+      <Image
+        src={logo}
+        alt="Escudo del Decanato Dulce Nombre de Jesús"
+        width={esHome ? 224 : 44}
+        height={esHome ? 224 : 44}
+        densities={[2]}
+        loading="eager"
+        class:list={[
+          'rounded-full ring-1 ring-oro-500/50',
+          esHome ? 'logo-viaje' : 'h-11 w-11',
+        ]}
+      />
       <span class="leading-tight">
         <span class="block font-serif text-[15px] font-semibold sm:text-base">Pastoral Social</span>
         <span class="block text-xs uppercase tracking-[0.14em] text-oro-300">Dulce Nombre de Jesús</span>

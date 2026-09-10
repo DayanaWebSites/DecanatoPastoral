@@ -10,6 +10,9 @@ node_modules/
 .env.*
 !.env.example
 
+# subidas locales del panel (nunca originales sin difuminar)
+apps/web/.data/
+
 # sistema
 .DS_Store
 Thumbs.db

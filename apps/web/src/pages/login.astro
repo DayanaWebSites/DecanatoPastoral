@@ -1,0 +1,15 @@
+---
+export const prerender = false;
+import AuthShell from '../layouts/AuthShell.astro';
+import LoginForm from '../components/editor/LoginForm';
+
+const raw = Astro.url.searchParams.get('next') || '/editar';
+const next = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/editar';
+---
+
+<AuthShell
+  titulo="Iniciar sesión"
+  subtitulo="Sólo para el equipo de la Pastoral Social. El público no usa esta página."
+>
+  <LoginForm client:load next={next} />
+</AuthShell>

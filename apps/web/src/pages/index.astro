@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Boton from '../components/ui/Boton.astro';
@@ -8,11 +7,15 @@ import TarjetaParroquia from '../components/ui/TarjetaParroquia.astro';
 import Cita from '../components/ui/Cita.astro';
 import logo from '../assets/decanato/logo-claro.webp';
 import heroFoto from '../assets/comedores/el-tepeyac-01-comidas-servidas.webp';
-import textos from '../data/textos.json';
-import decanato from '../data/decanato.json';
+import { loadComedores, loadDecanato, loadParroquias, loadTextos } from '../lib/content/load';
+import PanelLayout from '../layouts/PanelLayout.astro';
 
-const comedores = (await getCollection('comedores')).sort((a, b) => a.data.orden - b.data.orden);
-const parroquias = (await getCollection('parroquias')).sort((a, b) => a.data.orden - b.data.orden);
+const editando = Astro.url.pathname.startsWith('/editar');
+const textos = await loadTextos({ borrador: editando });
+const decanato = await loadDecanato({ borrador: editando });
+const comedores = await loadComedores({ borrador: editando });
+const parroquias = await loadParroquias({ borrador: editando });
+const Layout = editando ? PanelLayout : Base;
 
 const cifras = [
   { valor: '3', etiqueta: 'comedores asistenciales', pie: 'abiertos cada semana en el decanato' },
@@ -21,26 +24,46 @@ const cifras = [
 ];
 ---
 
-<Base
+<Layout
   titulo="inicio"
   descripcion="Tres comedores asistenciales del Decanato Dulce Nombre de Jesús en Guadalajara. Conoce dónde están, cómo sumarte como voluntario o bienhechor y a dónde canalizar a quien necesita comer."
 >
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-verde-900 text-crema">
-    <div
-      class="pointer-events-none absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-verde-700/40 blur-3xl"
-      aria-hidden="true"
-    ></div>
+  <section class="relative overflow-hidden bg-verde-950 text-crema">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <Image
+        src={heroFoto}
+        alt=""
+        widths={[900, 1600]}
+        sizes="100vw"
+        quality={50}
+        loading="eager"
+        class="h-full w-full scale-105 object-cover object-[72%_42%] opacity-45"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-verde-950 via-verde-950/88 to-verde-900/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-verde-950 via-transparent to-verde-950/55"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_18%_12%,rgba(222,171,51,0.28),transparent_46%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_88%_70%,rgba(4,85,31,0.35),transparent_40%)]"></div>
+    </div>
     <div class="contenedor relative grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
       <div>
-        <Image src={logo} alt="" width={80} height={80} densities={[2]} loading="eager" class="h-20 w-20 rounded-full ring-1 ring-oro-500/40" />
-        <p class="mt-7 text-xs font-bold uppercase tracking-[0.22em] text-oro-400">
-          {textos.hero.kicker} · {decanato.nombre}
+        <Image
+          src={logo}
+          alt=""
+          width={224}
+          height={224}
+          densities={[2]}
+          loading="eager"
+          class="hero-logo-estatico mb-6 h-28 w-28 rounded-full ring-1 ring-oro-500/50 sm:h-36 sm:w-36"
+        />
+        <p class="hero-reserva text-xs font-bold uppercase tracking-[0.22em] text-oro-400">
+          <span data-clave="sitio.textos" data-path="hero.kicker">{textos.hero.kicker}</span>
+          · {decanato.nombre}
         </p>
-        <h1 class="mt-4 font-serif text-4xl font-semibold leading-[1.12] sm:text-5xl lg:text-[3.4rem]">
+        <h1 class="mt-4 font-serif text-4xl font-semibold leading-[1.12] sm:text-5xl lg:text-[3.4rem]" data-clave="sitio.textos" data-path="hero.titulo">
           {textos.hero.titulo}
         </h1>
-        <p class="mt-5 max-w-xl font-serif text-xl italic text-oro-200">{textos.hero.entrada}</p>
+        <p class="mt-5 max-w-xl font-serif text-xl italic text-oro-200" data-clave="sitio.textos" data-path="hero.entrada">{textos.hero.entrada}</p>
         <p class="mt-6 max-w-xl text-[17px] leading-relaxed text-crema/90">
           En el decanato sostenemos tres comedores asistenciales. Aquí encuentras dónde están,
           a qué hora abren y cómo puedes sumarte: como voluntario, como bienhechor o
@@ -171,4 +194,4 @@ const cifras = [
       </div>
     </div>
   </section>
-</Base>
+</Layout>

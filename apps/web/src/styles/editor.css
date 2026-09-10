@@ -1,0 +1,25 @@
+/* Sólo se importa desde PanelLayout. No llega al layout público. */
+body.edicion { padding-top: 3.5rem; }
+
+.editor-barra {
+  position: fixed; inset: 0 0 auto 0; z-index: 80;
+  display: flex; align-items: center; gap: 0.75rem;
+  min-height: 3.5rem; padding: 0.5rem 1.25rem;
+  background: #022C13; color: #FCF9F2;
+  border-bottom: 3px solid #DEAB33;
+  font-size: 0.875rem;
+}
+
+[data-clave] { outline: 1px dashed transparent; }
+body.edicion [data-clave] { cursor: text; }
+body.edicion [data-clave]:hover,
+body.edicion [data-clave]:focus-visible {
+  outline: 2px solid #DEAB33;
+  outline-offset: 3px;
+  background: rgb(222 171 51 / 0.12);
+}
+body.edicion [data-clave][contenteditable='true'] {
+  outline: 2px solid #DEAB33;
+  background: #fff;
+  color: #1B1A17;
+}

@@ -1,25 +1,22 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Boton from '../../components/ui/Boton.astro';
 import Aviso from '../../components/ui/Aviso.astro';
-import decanato from '../../data/decanato.json';
+import { loadComedor, loadDecanato, loadParroquia } from '../../lib/content/load';
+import PanelLayout from '../../layouts/PanelLayout.astro';
 
-export async function getStaticPaths() {
-  const parroquias = await getCollection('parroquias');
-  return parroquias.map((p) => ({ params: { slug: p.id }, props: { parroquia: p } }));
-}
-
-interface Props { parroquia: CollectionEntry<'parroquias'> }
-const { parroquia } = Astro.props;
+const editando = Astro.url.pathname.startsWith('/editar');
+const Layout = editando ? PanelLayout : Base;
+const parroquia = await loadParroquia(Astro.params.slug!, { borrador: editando });
+if (!parroquia) return Astro.redirect('/404');
 const d = parroquia.data;
+const decanato = await loadDecanato({ borrador: editando });
 
 const imagenes = import.meta.glob<{ default: ImageMetadata }>('../../assets/logos/*.webp', { eager: true });
 const img = d.imagen ? imagenes[`../../assets/logos/${d.imagen}`]?.default : undefined;
 
-const comedores = await getCollection('comedores');
-const comedor = d.comedor ? comedores.find((c) => c.id === d.comedor) : undefined;
+const comedor = d.comedor ? await loadComedor(d.comedor, { borrador: editando }) : undefined;
 const enConstruccion = d.estado === 'en_construccion';
 const urlPagina = new URL(`/parroquias/${parroquia.id}`, Astro.site ?? decanato.sitio).toString();
 
@@ -54,7 +51,7 @@ const jsonLd = {
   ],
 };
 ---
-<Base
+<Layout
   titulo={`Parroquia ${d.nombre}`}
   descripcion={`Parroquia ${d.nombre}, del ${decanato.nombre} en Guadalajara. Servicios de Pastoral Social y contacto.`}
   jsonLd={jsonLd}
@@ -73,7 +70,7 @@ const jsonLd = {
         )}
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.2em] text-oro-400">Parroquia</p>
-          <h1 class="mt-2 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{d.nombre}</h1>
+          <h1 class="mt-2 font-serif text-4xl font-semibold leading-tight sm:text-5xl" data-clave={`parroquia.${parroquia.id}.nombre`}>{d.nombre}</h1>
         </div>
       </div>
     </div>
@@ -101,7 +98,7 @@ const jsonLd = {
     {d.servicios.length > 0 && (
       <section class="mt-12" aria-labelledby="h-servicios">
         <h2 id="h-servicios" class="font-serif text-2xl font-semibold text-verde-900">Qué ofrece</h2>
-        <ul class="mt-5 flex flex-wrap gap-2">
+        <ul class="mt-5 flex flex-wrap gap-2" data-clave={`parroquia.${parroquia.id}.servicios`} data-lista="1">
           {d.servicios.map((s) => (
             <li class="rounded-full border border-verde-200 bg-verde-50 px-4 py-1.5 text-sm font-medium text-verde-800">{s}</li>
           ))}
@@ -146,4 +143,4 @@ const jsonLd = {
       <Boton href="/comedores" variante="primario">Conoce los comedores</Boton>
     </div>
   </div>
-</Base>
+</Layout>

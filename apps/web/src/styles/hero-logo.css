@@ -1,0 +1,105 @@
+/* Un solo logo: grande en el hero; al bajar el hero se encaja en el nav.
+   Chrome/Edge: animation-timeline. Sin JS. Fallback: logo chico en nav + grande en hero. */
+
+.es-home .marca-home {
+  animation: marca-cede linear both;
+  animation-timeline: scroll();
+  animation-range: 0 78vh;
+}
+
+.es-home .logo-viaje {
+  position: fixed;
+  z-index: 60;
+  top: clamp(6.25rem, 15vh, 9rem);
+  left: max(1.25rem, calc((100vw - 72rem) / 2 + 1.25rem));
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 16px 48px rgb(1 28 12 / 0.4);
+  animation: logo-a-nav linear both;
+  animation-timeline: scroll();
+  animation-range: 0 78vh;
+}
+
+@media (min-width: 640px) {
+  .es-home .logo-viaje {
+    width: 11.5rem;
+    height: 11.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .es-home .logo-viaje {
+    top: clamp(7.25rem, 18vh, 11.5rem);
+    width: 14rem;
+    height: 14rem;
+  }
+}
+
+@keyframes logo-a-nav {
+  to {
+    top: 0.7rem;
+    left: max(1.25rem, calc((100vw - 72rem) / 2 + 1.25rem));
+    width: 2.75rem;
+    height: 2.75rem;
+    box-shadow: none;
+  }
+}
+
+@keyframes marca-cede {
+  to {
+    padding-left: 3.35rem;
+  }
+}
+
+.hero-logo-estatico {
+  display: none;
+}
+
+.hero-reserva {
+  margin-top: 8.75rem;
+}
+
+@media (min-width: 640px) {
+  .hero-reserva {
+    margin-top: 10.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-reserva {
+    margin-top: 13rem;
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .es-home .logo-viaje {
+    animation: none;
+    position: static;
+    width: 2.75rem;
+    height: 2.75rem;
+    box-shadow: none;
+  }
+  .es-home .marca-home {
+    animation: none;
+    padding-left: 0;
+  }
+  .hero-logo-estatico { display: block; }
+  .hero-reserva { margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .es-home .logo-viaje {
+    animation: none;
+    position: static;
+    width: 2.75rem;
+    height: 2.75rem;
+    box-shadow: none;
+  }
+  .es-home .marca-home {
+    animation: none;
+    padding-left: 0;
+  }
+  .hero-logo-estatico { display: block; }
+  .hero-reserva { margin-top: 0; }
+}

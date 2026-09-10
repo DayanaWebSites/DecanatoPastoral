@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: decanato-panel-pg
+    environment:
+      POSTGRES_USER: decanato
+      POSTGRES_PASSWORD: decanato
+      POSTGRES_DB: decanato
+    ports:
+      - '5433:5432'
+    volumes:
+      - decanato-panel-pg:/var/lib/postgresql/data
+
+volumes:
+  decanato-panel-pg:

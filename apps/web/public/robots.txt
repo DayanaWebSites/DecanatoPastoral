@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /editar
+Disallow: /login
+Disallow: /auth
+Disallow: /api
 
 Sitemap: https://pastoralsocialdecanatodulcenombre.org/sitemap-index.xml

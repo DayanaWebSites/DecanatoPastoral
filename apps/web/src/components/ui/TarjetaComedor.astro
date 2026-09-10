@@ -1,8 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
+import type { ComedorData, ContentEntry } from '../../lib/content/zod';
 
-interface Props { comedor: CollectionEntry<'comedores'>; prioridad?: boolean }
+interface Props { comedor: ContentEntry<ComedorData>; prioridad?: boolean }
 const { comedor, prioridad = false } = Astro.props;
 const d = comedor.data;
 

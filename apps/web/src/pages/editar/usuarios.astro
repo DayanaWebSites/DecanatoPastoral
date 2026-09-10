@@ -1,0 +1,52 @@
+---
+export const prerender = false;
+import PanelLayout from '../../layouts/PanelLayout.astro';
+import { puedeGestionarUsuarios } from '../../lib/roles';
+if (!Astro.locals.user || !puedeGestionarUsuarios(Astro.locals.user)) return Astro.redirect('/editar');
+---
+<PanelLayout titulo="Usuarios" descripcion="Alta y roles del panel">
+  <section class="contenedor py-16">
+    <h1 class="font-serif text-3xl font-semibold text-verde-900">Quién puede editar</h1>
+    <p class="mt-3 max-w-xl text-grafito">Un administrador invita. No hay registro abierto. La primera contraseña se cambia al entrar.</p>
+    <div id="app" class="mt-8"></div>
+  </section>
+  <script>
+    const root = document.getElementById('app')!;
+    async function pintar() {
+      const r = await fetch('/api/usuarios');
+      const data = await r.json();
+      root.innerHTML = `
+        <table class="w-full text-left text-sm">
+          <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Parroquias</th></tr></thead>
+          <tbody>${(data.usuarios||[]).map((u: any) => `<tr class="border-t border-arena"><td class="py-2">${u.nombre}</td><td>${u.correo}</td><td>${u.rol}</td><td>${(u.parroquias||[]).join(', ')}</td></tr>`).join('')}</tbody>
+        </table>
+        <form id="alta" class="mt-8 grid max-w-lg gap-3">
+          <h2 class="font-serif text-xl">Invitar</h2>
+          <input name="nombre" required placeholder="Nombre" class="rounded-lg border px-3 py-2" />
+          <input name="correo" type="email" required placeholder="Correo" class="rounded-lg border px-3 py-2" />
+          <select name="rol" class="rounded-lg border px-3 py-2">
+            <option value="ADMIN">ADMIN</option>
+            <option value="EDITOR_PARROQUIA">EDITOR_PARROQUIA</option>
+            <option value="SOLO_LECTURA">SOLO_LECTURA</option>
+          </select>
+          <input name="parroquias" placeholder="slugs de parroquia, separados por coma" class="rounded-lg border px-3 py-2" />
+          <button class="rounded-full bg-verde-700 px-4 py-2 text-crema" type="submit">Crear</button>
+          <p id="msg" class="text-sm"></p>
+        </form>`;
+      document.getElementById('alta')!.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target as HTMLFormElement);
+        const parroquias = String(fd.get('parroquias')||'').split(',').map(s => s.trim()).filter(Boolean);
+        const res = await fetch('/api/usuarios', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ nombre: fd.get('nombre'), correo: fd.get('correo'), rol: fd.get('rol'), parroquias }),
+        });
+        const j = await res.json();
+        (document.getElementById('msg')!).textContent = res.ok ? `Creado. Contraseña temporal: ${j.passwordTemporal || '(se entrega por otro canal)'}` : j.error;
+        if (res.ok) pintar();
+      });
+    }
+    pintar();
+  </script>
+</PanelLayout>
