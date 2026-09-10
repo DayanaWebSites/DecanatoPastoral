@@ -1,5 +1,5 @@
 export const authCampo =
-  'h-11 w-full rounded-xl border border-white/12 bg-white/6 px-4 text-[15px] text-crema placeholder:text-crema/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/20 focus:border-oro-500/55 focus:bg-white/10 focus:outline-none focus-visible:outline-none! focus-visible:ring-2 focus-visible:ring-oro-500/25';
+  'h-11 w-full rounded-xl border border-white/15 bg-verde-950/70 px-4 text-[15px] text-crema placeholder:text-crema/40 hover:border-white/25 focus:border-oro-500/60 focus:outline-none focus-visible:outline-none! focus-visible:ring-2 focus-visible:ring-oro-500/25';
 
 export const authCampoIcono = `${authCampo} pl-11`;
 

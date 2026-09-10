@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.26090905 — 2026-09-09
+
+### fix
+- Login: el `body` crema de `global.css` tapaba el canvas oscuro y el texto se perdía.
+
 ## 0.1.26090904 — 2026-09-09
 
 ### feat

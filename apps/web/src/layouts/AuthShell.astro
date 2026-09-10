@@ -27,13 +27,12 @@ const marca = textos.hero.kicker;
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={serif600} as="font" type="font/woff2" crossorigin />
   </head>
-  <body class="min-h-dvh bg-verde-950 text-crema">
-    <main class="relative flex min-h-dvh items-center justify-center overflow-hidden px-4 py-10">
+  <body class="auth-pantalla min-h-dvh">
+    <main class="relative flex min-h-dvh items-center justify-center overflow-hidden bg-verde-950 px-4 py-10 text-crema">
       <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div class="absolute -left-16 top-1/4 size-80 rounded-full bg-oro-500/15 blur-3xl"></div>
-        <div class="absolute -right-16 bottom-1/4 size-80 rounded-full bg-verde-500/25 blur-3xl"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-verde-900/40 via-transparent to-verde-950"></div>
-        <div class="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(252,249,242,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(252,249,242,0.35)_1px,transparent_1px)] [background-size:42px_42px]"></div>
+        <div class="absolute -left-20 top-10 size-72 rounded-full bg-oro-500/12 blur-3xl"></div>
+        <div class="absolute -right-16 bottom-0 size-80 rounded-full bg-verde-500/20 blur-3xl"></div>
+        <div class="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(252,249,242,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(252,249,242,0.5)_1px,transparent_1px)] [background-size:42px_42px]"></div>
       </div>
 
       <div class="relative z-10 w-full max-w-[420px]">
@@ -46,33 +45,37 @@ const marca = textos.hero.kicker;
             densities={[2]}
             class="h-[5.5rem] w-[5.5rem]"
           />
-          <p class="mt-4 font-serif text-2xl font-semibold leading-tight">{marca}</p>
-          <p class="mt-1 text-sm text-crema/55">{decanato.nombre}</p>
+          <p class="mt-4 font-serif text-2xl font-semibold leading-tight text-crema">{marca}</p>
+          <p class="mt-1 text-sm text-crema/60">{decanato.nombre}</p>
         </div>
 
-        <div class="rounded-2xl border border-white/12 bg-white/5 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:p-6">
+        <div class="rounded-2xl border border-white/12 bg-verde-900/90 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:p-6">
           <h1 class="text-center font-serif text-2xl font-semibold text-crema">{titulo}</h1>
-          {subtitulo && <p class="mt-1 text-center text-sm leading-relaxed text-crema/60">{subtitulo}</p>}
+          {subtitulo && <p class="mt-1 text-center text-sm leading-relaxed text-crema/65">{subtitulo}</p>}
           <div class="auth-form mt-5">
             <slot />
           </div>
         </div>
 
-        <p class="mt-5 flex items-center justify-center gap-3 text-xs text-crema/35">
-          <a class="hover:text-crema/60" href="/">{auth.volver}</a>
+        <p class="mt-5 flex items-center justify-center gap-3 text-xs text-crema/45">
+          <a class="hover:text-crema/75" href="/">{auth.volver}</a>
           <span aria-hidden="true">·</span>
-          <a class="hover:text-crema/60" href="/aviso-de-privacidad">{auth.aviso}</a>
+          <a class="hover:text-crema/75" href="/aviso-de-privacidad">{auth.aviso}</a>
         </p>
       </div>
     </main>
   </body>
 </html>
 
-<style>
-  .auth-form :global(input:focus),
-  .auth-form :global(input:focus-visible),
-  .auth-form :global(button:focus),
-  .auth-form :global(button:focus-visible) {
+<style is:global>
+  body.auth-pantalla {
+    background: var(--color-verde-950);
+    color: var(--color-crema);
+  }
+  .auth-form input:focus,
+  .auth-form input:focus-visible,
+  .auth-form button:focus,
+  .auth-form button:focus-visible {
     outline: none;
     outline-offset: 0;
   }
