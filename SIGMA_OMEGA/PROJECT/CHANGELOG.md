@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.26090904 — 2026-09-09
+
+### feat
+- Login de familia SIGMA: canvas oscuro, logo arriba, tarjeta glass centrada (paleta del decanato).
+
 ## 0.1.26090903 — 2026-09-09
 
 ### feat

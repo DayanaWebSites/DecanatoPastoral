@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import { Image } from 'astro:assets';
 import logoClaro from '../assets/decanato/logo-claro.webp';
-import logoOscuro from '../assets/decanato/logo-oscuro.webp';
 import decanato from '../data/decanato.json';
 import textos from '../data/textos.json';
 import auth from '../data/auth.json';
@@ -23,63 +22,49 @@ const marca = textos.hero.kicker;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo} · {marca}</title>
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#04551F" />
+    <meta name="theme-color" content="#011C0C" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={serif600} as="font" type="font/woff2" crossorigin />
   </head>
-  <body class="min-h-dvh bg-crema text-tinta">
-    <div class="h-1 bg-oro-500 lg:hidden" aria-hidden="true"></div>
-    <div class="lg:grid lg:min-h-dvh lg:grid-cols-[minmax(18rem,0.88fr)_minmax(0,1.12fr)]">
-      <aside class="relative hidden overflow-hidden bg-verde-950 text-crema lg:flex lg:flex-col lg:justify-between lg:px-14 lg:py-14">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_0%,var(--color-oro-500)_0%,transparent_42%)] opacity-20" aria-hidden="true"></div>
-        <div class="absolute inset-y-0 right-0 w-px bg-oro-500/45" aria-hidden="true"></div>
-        <div class="relative">
+  <body class="min-h-dvh bg-verde-950 text-crema">
+    <main class="relative flex min-h-dvh items-center justify-center overflow-hidden px-4 py-10">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div class="absolute -left-16 top-1/4 size-80 rounded-full bg-oro-500/15 blur-3xl"></div>
+        <div class="absolute -right-16 bottom-1/4 size-80 rounded-full bg-verde-500/25 blur-3xl"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-verde-900/40 via-transparent to-verde-950"></div>
+        <div class="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(252,249,242,0.35)_1px,transparent_1px),linear-gradient(90deg,rgba(252,249,242,0.35)_1px,transparent_1px)] [background-size:42px_42px]"></div>
+      </div>
+
+      <div class="relative z-10 w-full max-w-[420px]">
+        <div class="mb-6 flex flex-col items-center text-center">
           <Image
             src={logoClaro}
             alt={`Escudo del ${decanato.nombre}`}
-            width={72}
-            height={72}
+            width={88}
+            height={88}
             densities={[2]}
-            class="h-[4.5rem] w-[4.5rem]"
+            class="h-[5.5rem] w-[5.5rem]"
           />
-          <p class="mt-10 font-serif text-3xl font-semibold leading-tight">{marca}</p>
-          <p class="mt-2 text-sm leading-relaxed text-crema/88">{decanato.nombre}</p>
-          <div class="mt-8 h-px w-14 bg-oro-500" aria-hidden="true"></div>
-          <p class="mt-8 max-w-sm text-[15px] leading-relaxed text-crema/80">{auth.descripcion}</p>
+          <p class="mt-4 font-serif text-2xl font-semibold leading-tight">{marca}</p>
+          <p class="mt-1 text-sm text-crema/55">{decanato.nombre}</p>
         </div>
-        <p class="relative text-sm text-crema/60">{decanato.arquidiocesis}</p>
-      </aside>
 
-      <main class="flex min-h-[calc(100dvh-0.25rem)] flex-col justify-center overflow-x-hidden px-5 py-12 sm:px-10 lg:min-h-dvh">
-        <div class="mx-auto w-full max-w-[400px]">
-          <div class="mb-10 flex items-center gap-3 lg:hidden">
-            <Image
-              src={logoOscuro}
-              alt={`Escudo del ${decanato.nombre}`}
-              width={44}
-              height={44}
-              densities={[2]}
-              class="h-11 w-11"
-            />
-            <span class="leading-tight">
-              <span class="block font-serif text-base font-semibold text-verde-900">{marca}</span>
-              <span class="block text-xs text-grafito">{decanato.nombre}</span>
-            </span>
-          </div>
-
-          <p class="text-sm font-medium text-verde-700">{auth.kicker}</p>
-          <h1 class="mt-2 font-serif text-[2rem] font-semibold leading-tight text-verde-900">{titulo}</h1>
-          {subtitulo && <p class="mt-2 text-[15px] leading-relaxed text-grafito">{subtitulo}</p>}
-          <div class="auth-form">
+        <div class="rounded-2xl border border-white/12 bg-white/5 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:p-6">
+          <h1 class="text-center font-serif text-2xl font-semibold text-crema">{titulo}</h1>
+          {subtitulo && <p class="mt-1 text-center text-sm leading-relaxed text-crema/60">{subtitulo}</p>}
+          <div class="auth-form mt-5">
             <slot />
           </div>
-          <p class="mt-10 text-sm">
-            <a class="font-medium text-verde-700 underline-offset-4 hover:underline" href="/">{auth.volver}</a>
-          </p>
         </div>
-      </main>
-    </div>
+
+        <p class="mt-5 flex items-center justify-center gap-3 text-xs text-crema/35">
+          <a class="hover:text-crema/60" href="/">{auth.volver}</a>
+          <span aria-hidden="true">·</span>
+          <a class="hover:text-crema/60" href="/aviso-de-privacidad">{auth.aviso}</a>
+        </p>
+      </div>
+    </main>
   </body>
 </html>
 

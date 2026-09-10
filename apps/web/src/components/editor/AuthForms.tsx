@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { authCampo, authCta, authLabel } from './auth-ui';
+import { authCampo, authCta, authError, authLabel, authOk } from './auth-ui';
 
 export function RecuperarForm() {
   const [msg, setMsg] = useState('');
   const [cargando, setCargando] = useState(false);
   return (
     <form
-      className="mt-8 space-y-5"
+      className="space-y-4"
       onSubmit={async (e) => {
         e.preventDefault();
         setCargando(true);
@@ -39,7 +39,7 @@ export function RecuperarForm() {
       <button className={authCta} type="submit" disabled={cargando}>
         {cargando ? 'Enviando…' : 'Enviar enlace'}
       </button>
-      {msg && <p className="text-sm text-verde-800" role="status">{msg}</p>}
+      {msg && <p className={authOk} role="status">{msg}</p>}
     </form>
   );
 }
@@ -49,7 +49,7 @@ export function NuevaClaveForm({ token, obligatorio }: { token: string; obligato
   const [cargando, setCargando] = useState(false);
   return (
     <form
-      className="mt-8 space-y-5"
+      className="space-y-4"
       onSubmit={async (e) => {
         e.preventDefault();
         setErr('');
@@ -81,7 +81,7 @@ export function NuevaClaveForm({ token, obligatorio }: { token: string; obligato
         Nueva contraseña
         <input id="nueva" name="nueva" type="password" required minLength={10} autoComplete="new-password" className={`${authCampo} mt-1.5`} />
       </label>
-      {err && <p className="rounded-md border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-900" role="alert">{err}</p>}
+      {err && <p className={authError} role="alert">{err}</p>}
       <button className={authCta} type="submit" disabled={cargando}>
         {cargando ? 'Guardando…' : 'Guardar'}
       </button>

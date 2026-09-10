@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { authCampoIcono, authCta, authLabel, authLink } from './auth-ui';
+import { authCampoIcono, authCta, authError, authLabel, authLink } from './auth-ui';
 
 function safeNext(n: string) {
   if (!n.startsWith('/') || n.startsWith('//')) return '/editar';
@@ -8,7 +8,7 @@ function safeNext(n: string) {
 
 function IconoCorreo() {
   return (
-    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <rect x="3.5" y="6" width="17" height="12" rx="2" />
       <path strokeLinecap="round" strokeLinejoin="round" d="m5 8.2 7 5.2 7-5.2" />
     </svg>
@@ -17,7 +17,7 @@ function IconoCorreo() {
 
 function IconoCandado() {
   return (
-    <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <rect x="5.5" y="11" width="13" height="9" rx="1.8" />
       <path strokeLinecap="round" d="M8 11V8.2a4 4 0 0 1 8 0V11" />
     </svg>
@@ -53,7 +53,7 @@ export default function LoginForm({ next }: { next: string }) {
 
   return (
     <form
-      className="mt-8 space-y-5"
+      className="space-y-4"
       onSubmit={async (e) => {
         e.preventDefault();
         setErr('');
@@ -93,7 +93,7 @@ export default function LoginForm({ next }: { next: string }) {
       <label className={authLabel} htmlFor="correo">
         Correo
         <span className="relative mt-1.5 block">
-          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-verde-800">
+          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-crema/40">
             <IconoCorreo />
           </span>
           <input
@@ -104,14 +104,18 @@ export default function LoginForm({ next }: { next: string }) {
             inputMode="email"
             required
             autoComplete="username"
+            placeholder="correo@ejemplo.com"
             className={authCampoIcono}
           />
         </span>
       </label>
       <div>
-        <label className={authLabel} htmlFor="password">Contraseña</label>
+        <div className="flex items-baseline justify-between gap-3">
+          <label className={authLabel} htmlFor="password">Contraseña</label>
+          <a className={authLink} href="/auth/recuperar">Olvidé mi contraseña</a>
+        </div>
         <span className="relative mt-1.5 block">
-          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-verde-800">
+          <span className="pointer-events-none absolute inset-y-0 left-0 grid w-11 place-items-center text-crema/40">
             <IconoCandado />
           </span>
           <input
@@ -120,6 +124,7 @@ export default function LoginForm({ next }: { next: string }) {
             type={ver ? 'text' : 'password'}
             required
             autoComplete="current-password"
+            placeholder="Contraseña"
             className={`${authCampoIcono} pr-12`}
             aria-invalid={err ? true : undefined}
             aria-describedby={err ? 'login-error' : undefined}
@@ -127,19 +132,16 @@ export default function LoginForm({ next }: { next: string }) {
           <button
             type="button"
             tabIndex={-1}
-            className="absolute inset-y-0 right-0 grid w-11 place-items-center text-verde-800 hover:text-verde-700"
+            className="absolute inset-y-0 right-0 grid w-11 place-items-center text-crema/40 hover:text-crema/80"
             aria-label={ver ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             onClick={() => setVer((v) => !v)}
           >
             <IconoOjo abierto={ver} />
           </button>
         </span>
-        <p className="mt-2">
-          <a className={authLink} href="/auth/recuperar">Olvidé mi contraseña</a>
-        </p>
       </div>
       {err && (
-        <p id="login-error" className="rounded-md border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-900" role="alert">
+        <p id="login-error" className={authError} role="alert">
           {err}
         </p>
       )}
