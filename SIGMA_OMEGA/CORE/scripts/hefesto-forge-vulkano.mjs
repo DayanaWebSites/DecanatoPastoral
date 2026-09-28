@@ -646,15 +646,49 @@ acquire() {
     exit 73
   fi
   echo "[forge-vulkano] VERSION_OK \$_remote_ver HEAD=\$(git rev-parse --short HEAD 2>/dev/null || echo archive)"
+  _head=\$(git rev-parse HEAD 2>/dev/null || echo archive)
+  _failf=/var/lib/hefesto/fail-${slug}-${branchArg}
+  mkdir -p /var/lib/hefesto
+  if [ "\$_head" != archive ] && [ -f "\$_failf" ] && [ "${process.env.HEFESTO_RETRY_SAME === '1' ? '1' : '0'}" != 1 ]; then
+    read -r _fsha _fcount < "\$_failf" || true
+    if [ "\$_fsha" = "\$_head" ] && [ "\${_fcount:-0}" -ge 2 ]; then
+      echo "[forge-vulkano] HALT: este commit ya falló \$_fcount veces con la forja. No se relanza igual: lee el error de arriba, corrige, push y forja de nuevo (forzar: HEFESTO_RETRY_SAME=1)"
+      exit 80
+    fi
+  fi
+  fail_mark() {
+    [ "\$_head" = archive ] && return 0
+    local n=1
+    if [ -f "\$_failf" ]; then
+      read -r _fsha _fcount < "\$_failf" || true
+      [ "\$_fsha" = "\$_head" ] && n=\$(( \${_fcount:-0} + 1 ))
+    fi
+    echo "\$_head \$n" > "\$_failf"
+    echo "[forge-vulkano] FAIL_COUNT \$n para \${_head:0:8} (a la 2da se bloquea el mismo commit)"
+  }
   if acquire; then
+    rm -f "\$_failf"
     exit 0
+  else
+    _st=\$?
+    if [ "\$_st" -ne 71 ]; then
+      fail_mark
+      exit "\$_st"
+    fi
   fi
   echo "[forge-vulkano] slots llenos — en cola (wait ${FORGE_WAIT_SEC}s, slots=${FORGE_SLOTS})"
-  # RT-08: reintentar cualquier slot libre, no solo s1
+  # RT-08: reintentar cualquier slot libre, no solo s1. Un build que falla no se reintenta.
   _deadline=\$(( \$(date +%s) + WAIT ))
   while [ "\$(date +%s)" -lt "\$_deadline" ]; do
     if acquire; then
+      rm -f "\$_failf"
       exit 0
+    else
+      _st=\$?
+      if [ "\$_st" -ne 71 ]; then
+        fail_mark
+        exit "\$_st"
+      fi
     fi
     sleep 2
   done
